@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.shape-rounded {
+    @apply rounded-full;
+}
+
+.btn-primary {
+    @apply bg-orange-500 hover:bg-orange-600 px-4 py-1 text-white font-semibold shape-rounded cursor-pointer;
+}
+
+.btn-text-primary {
+    @apply text-center text-orange-500 font-semibold cursor-pointer;
+}
+
+.card {
+    @apply p-8 sm:shadow sm:bg-white rounded-3xl;
+}
+
+.input-text {
+    @apply shape-rounded border px-2 py-1;
+}
