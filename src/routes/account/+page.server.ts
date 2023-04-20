@@ -3,6 +3,7 @@ import { fail, redirect } from "@sveltejs/kit"
 import { auth } from "$lib/server/lucia"
 import { LOGIN_URL } from "$lib/constants"
 import { prismaClient } from "$lib/server/prisma"
+import { createSampleData } from "../../lib/server/sampledata"
 
 export const load: PageServerLoad = async ({locals}) => {
     const {user} = await locals.validateUser()
@@ -21,6 +22,9 @@ export const load: PageServerLoad = async ({locals}) => {
 }
 
 export const actions: Actions = {
+    createSampleDate: async ({request, locals}) => {
+        await createSampleData()
+    },
     logout: async ({request, locals}) => {
         const session = await locals.validate()
         if (!session) return fail(401)

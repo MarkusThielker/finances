@@ -18,7 +18,17 @@
             <p>Username: {data.user.username}</p>
         </div>
 
+        <div>
+            <p>Payments: {data.payments}</p>
+            <p>Entities: {data.entities}</p>
+            <p>Categories: {data.categories}</p>
+        </div>
+
         <div class="space-y-2">
+
+            <form action="?/createSampleDate" class="flex flex-col" method="POST" use:enhance>
+                <input class="btn-primary" type="submit" value="Create Sample Data"/>
+            </form>
 
             <form action="?/logout" class="flex flex-col" method="POST" use:enhance>
                 <input class="btn-primary" type="submit" value="Logout"/>
