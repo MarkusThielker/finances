@@ -39,3 +39,48 @@ model AuthKey {
   @@index([user_id])
   @@map("auth_key")
 }
+
+model Entity {
+  id              Int        @id @default(autoincrement())
+  name            String     @unique
+  identifier      String     @unique
+  type            EntityType
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt @map("updated_at")
+  paymentsAsPayor Payment[]  @relation("PayorEntity")
+  paymentsAsPayee Payment[]  @relation("PayeeEntity")
+
+  @@map("entities")
+}
+
+enum EntityType {
+  Entity
+  Account
+}
+
+model Payment {
+  id         Int       @id @default(autoincrement())
+  amount     BigInt
+  currency   String    @default("EUR")
+  payor      Entity    @relation("PayorEntity", fields: [payorId], references: [id])
+  payorId    Int       @map("payor_id")
+  payee      Entity    @relation("PayeeEntity", fields: [payeeId], references: [id])
+  payeeId    Int       @map("payee_id")
+  category   Category? @relation(fields: [categoryId], references: [id])
+  categoryId Int?      @map("category_id")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  @@map("payments")
+}
+
+model Category {
+  id        Int       @id @default(autoincrement())
+  name      String
+  color     String
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+  payments  Payment[]
+
+  @@map("categories")
+}
