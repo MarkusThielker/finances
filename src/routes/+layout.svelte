@@ -16,6 +16,12 @@
 
             <a href="/">Home</a>
 
+            <a href="/payments">Payments</a>
+
+            <a href="/entities">Entities</a>
+
+            <a href="/categories">Categories</a>
+
         </div>
 
         <div class="flex w-full items-center justify-end space-x-4">
