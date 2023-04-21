@@ -8,7 +8,13 @@ export const load: PageServerLoad = async ({locals}) => {
     const {user} = await locals.validateUser()
     if (!user) throw redirect(302, LOGIN_URL)
 
-    let payments = await prismaClient.payment.findMany()
+    let payments = await prismaClient.payment.findMany({
+        include: {
+            payor: true,
+            payee: true,
+            category: true,
+        },
+    })
     payments = payments.sort(
         (a, b) => b.createdAt.getTime() - a.createdAt.getTime())
 
