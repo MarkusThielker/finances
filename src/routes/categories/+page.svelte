@@ -41,7 +41,7 @@
                                 1)}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{category.name}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <svg class="h-7 w-7" fill={category.color} viewBox="0 0 20 20"
+                                <svg class="h-5" fill={category.color} viewBox="0 0 20 20"
                                      xmlns="http://www.w3.org/2000/svg">
                                     <circle cx="10" cy="10" r="10"/>
                                 </svg>

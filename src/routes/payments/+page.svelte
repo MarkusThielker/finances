@@ -50,7 +50,13 @@
                             </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payor?.name}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payee?.name}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.category?.name}</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 inline-flex items-center">
+                                <svg class="h-5 mr-2" fill={payment.category?.color} viewBox="0 0 20 20"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <circle cx="10" cy="10" r="10"/>
+                                </svg>
+                                {payment.category?.name}
+                            </td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.createdAt.toLocaleString()}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.updatedAt.toLocaleString()}</td>
                         </tr>
