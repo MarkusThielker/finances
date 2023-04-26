@@ -8,7 +8,11 @@ export const load: PageServerLoad = async ({locals}) => {
     const {user} = await locals.validateUser()
     if (!user) throw redirect(302, LOGIN_URL)
 
-    const categories = await prismaClient.category.findMany()
+    const categories = await prismaClient.category.findMany({
+        where: {
+            userId: user.userId,
+        },
+    })
 
     return {
         user,

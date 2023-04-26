@@ -9,6 +9,9 @@ export const load: PageServerLoad = async ({locals}) => {
     if (!user) throw redirect(302, LOGIN_URL)
 
     let payments = await prismaClient.payment.findMany({
+        where: {
+            userId: user.userId,
+        },
         include: {
             payor: true,
             payee: true,
@@ -16,7 +19,7 @@ export const load: PageServerLoad = async ({locals}) => {
         },
     })
     payments = payments.sort(
-        (a, b) => b.createdAt.getTime() - a.createdAt.getTime())
+        (a, b) => b.date.getTime() - a.date.getTime())
 
     return {
         user,

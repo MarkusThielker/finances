@@ -27,6 +27,7 @@
                         <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6" scope="col">
                             ID
                         </th>
+                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Date</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Amount</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Payor</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Payee</th>
@@ -40,6 +41,7 @@
                     {#each data.payments as payment}
                         <tr>
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{payment.id}</td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.date.toLocaleString()}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                 {
                                     new Intl.NumberFormat("de-DE", {
