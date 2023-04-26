@@ -13,6 +13,9 @@ model AuthUser {
   auth_session AuthSession[]
   auth_key     AuthKey[]
   username     String        @unique
+  enitities    Entity[]
+  payments     Payment[]
+  categories   Category[]
 
   @@map("auth_user")
 }
@@ -42,6 +45,8 @@ model AuthKey {
 
 model Entity {
   id              Int        @id @default(autoincrement())
+  userId          String     @map("user_id")
+  user            AuthUser   @relation(fields: [userId], references: [id])
   name            String     @unique
   identifier      String     @unique
   type            EntityType
@@ -60,8 +65,11 @@ enum EntityType {
 
 model Payment {
   id         Int       @id @default(autoincrement())
+  userId     String    @map("user_id")
+  user       AuthUser  @relation(fields: [userId], references: [id])
   amount     BigInt
   currency   String    @default("EUR")
+  date       DateTime  @default(now())
   payor      Entity    @relation("PayorEntity", fields: [payorId], references: [id])
   payorId    Int       @map("payor_id")
   payee      Entity    @relation("PayeeEntity", fields: [payeeId], references: [id])
@@ -76,6 +84,8 @@ model Payment {
 
 model Category {
   id        Int       @id @default(autoincrement())
+  userId    String    @map("user_id")
+  user      AuthUser  @relation(fields: [userId], references: [id])
   name      String
   color     String
   createdAt DateTime  @default(now()) @map("created_at")

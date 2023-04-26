@@ -23,7 +23,9 @@ export const load: PageServerLoad = async ({locals}) => {
 
 export const actions: Actions = {
     createSampleDate: async ({request, locals}) => {
-        await createSampleData()
+        const {user} = await locals.validateUser()
+        if (!user) return fail(401)
+        await createSampleData(user.userId)
     },
     logout: async ({request, locals}) => {
         const session = await locals.validate()
