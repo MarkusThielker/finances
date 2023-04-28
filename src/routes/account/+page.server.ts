@@ -9,9 +9,15 @@ export const load: PageServerLoad = async ({locals}) => {
     const {user} = await locals.validateUser()
     if (!user) throw redirect(302, LOGIN_URL)
 
-    const entities = await prismaClient.entity.count()
-    const categories = await prismaClient.category.count()
-    const payments = await prismaClient.payment.count()
+    const entities = await prismaClient.entity.count({
+        where: {userId: user.userId},
+    })
+    const categories = await prismaClient.category.count({
+        where: {userId: user.userId},
+    })
+    const payments = await prismaClient.payment.count({
+        where: {userId: user.userId},
+    })
 
     return {
         user,
