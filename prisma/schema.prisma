@@ -16,6 +16,7 @@ model AuthUser {
   enitities    Entity[]
   payments     Payment[]
   categories   Category[]
+  preferences  Preference[]
 
   @@map("auth_user")
 }
@@ -95,4 +96,17 @@ model Category {
   payments  Payment[]
 
   @@map("categories")
+}
+
+model Preference {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  user      AuthUser @relation(fields: [userId], references: [id])
+  key       String
+  value     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique(fields: [userId, key])
+  @@map("preferences")
 }
