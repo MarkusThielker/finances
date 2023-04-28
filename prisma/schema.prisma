@@ -47,14 +47,16 @@ model Entity {
   id              Int        @id @default(autoincrement())
   userId          String     @map("user_id")
   user            AuthUser   @relation(fields: [userId], references: [id])
-  name            String     @unique
-  identifier      String     @unique
+  name            String
+  identifier      String
   type            EntityType
   createdAt       DateTime   @default(now()) @map("created_at")
   updatedAt       DateTime   @updatedAt @map("updated_at")
   paymentsAsPayor Payment[]  @relation("PayorEntity")
   paymentsAsPayee Payment[]  @relation("PayeeEntity")
 
+  @@unique(fields: [userId, name])
+  @@unique(fields: [userId, identifier])
   @@map("entities")
 }
 
