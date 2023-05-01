@@ -86,6 +86,7 @@
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Created</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Updated</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col"></th>
+                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col"></th>
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
@@ -114,9 +115,19 @@
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.createdAt.toLocaleString()}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.updatedAt.toLocaleString()}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <button class="btn-text-primary px-4" on:click={() => openDialog(payment)}>
+                                <button class="btn-text-primary" on:click={() => openDialog(payment)}>
                                     Edit
                                 </button>
+                            </td>
+                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                <form method="POST" action="?/remove">
+
+                                    <input type="hidden" id="id" name="id" value={payment.id}>
+
+                                    <button type="submit" class="btn-text-primary">
+                                        Remove
+                                    </button>
+                                </form>
                             </td>
                         </tr>
                     {/each}
@@ -138,7 +149,9 @@
                     method="POST" action="{ isEdit ? '?/update' : '?/create'}"
                     class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6">
 
-                <h1 class="text-2xl font-semibold leading-6 text-gray-900 mb-4">{ isEdit ? "Update Payment" : "Create Payment"}</h1>
+                <h1 class="text-2xl font-semibold leading-6 text-gray-900 mb-4">{ isEdit
+                    ? "Update Payment"
+                    : "Create Payment"}</h1>
 
                 <div class="flex flex-col space-y-2">
 

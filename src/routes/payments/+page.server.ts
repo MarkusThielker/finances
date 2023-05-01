@@ -103,6 +103,23 @@ export const actions: Actions = {
 
         return
     },
+    remove: async ({request, locals}) => {
+
+        const {user} = await locals.validateUser()
+        if (!user) throw redirect(302, LOGIN_URL)
+
+        const formData = await request.formData()
+        const id = Number(formData.get("id") as string)
+        if (!id) throw error(400, "Invalid payment id")
+
+        try {
+
+            await prismaClient.payment.delete({where: {id}})
+
+        } catch (e) {
+            return error(400, "Invalid payment data")
+        }
+    },
 }
 
 function readFormData(formData: FormData) {
