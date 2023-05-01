@@ -17,13 +17,13 @@
     let dateString = date.toISOString().split("T")[0]
 
     let payors = data.entities
-    let payor = payors[0].id
+    let payor = payors[0]?.id
 
     let payees = data.entities
-    let payee = payees[1].id
+    let payee = payees[1]?.id
 
     let categories = data.categories
-    let category = categories[0].id
+    let category = categories[0]?.id
 
     function openDialog(payment?: Payment) {
 
@@ -41,9 +41,9 @@
             amount = 0
             date = new Date()
             dateString = date.toISOString().split("T")[0]
-            payor = payors[0].id
-            payee = payees[1].id
-            category = categories[0].id
+            payor = payors[0]?.id ?? -1
+            payee = payees[1]?.id ?? -1
+            category = categories[0]?.id ?? -1
             isEdit = false
         }
 
