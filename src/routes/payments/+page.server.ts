@@ -21,8 +21,10 @@ export const load: PageServerLoad = async ({locals}) => {
     payments = payments.sort(
         (a, b) => b.date.getTime() - a.date.getTime())
 
-    let entities = await prismaClient.entity.findMany({where: {userId: user.userId}})
-    let categories = await prismaClient.category.findMany({where: {userId: user.userId}})
+    let entities = await prismaClient.entity.findMany(
+        {where: {userId: user.userId}})
+    let categories = await prismaClient.category.findMany(
+        {where: {userId: user.userId}})
 
     return {
         user,
@@ -38,13 +40,13 @@ export const actions: Actions = {
         const {user} = await locals.validateUser()
         if (!user) throw redirect(302, LOGIN_URL)
 
-        const formData = await request.formData()
-
-        const amount = Math.round(Number(formData.get("amount") as string) * 100)
-        const date = new Date(formData.get("date") as string)
-        const payorId = Number(formData.get("payor") as string)
-        const payeeId = Number(formData.get("payee") as string)
-        const categoryId = Number(formData.get("category") as string)
+        const {
+            amount,
+            date,
+            payorId,
+            payeeId,
+            categoryId
+        } = readFormData(await request.formData())
 
         try {
             await prismaClient.payment.create({
@@ -55,7 +57,7 @@ export const actions: Actions = {
                     payorId,
                     payeeId,
                     categoryId,
-                }
+                },
             })
         } catch (e) {
             return error(400, "Invalid payment data")
@@ -63,4 +65,59 @@ export const actions: Actions = {
 
         return
     },
+    update: async ({request, locals}) => {
+
+        const {user} = await locals.validateUser()
+        if (!user) throw redirect(302, LOGIN_URL)
+
+        const formData = await request.formData()
+
+        const id = Number(formData.get("id") as string)
+        if (!id) return error(400, "Invalid payment id")
+
+        const {
+            amount,
+            date,
+            payorId,
+            payeeId,
+            categoryId
+        } = readFormData(formData)
+
+        try {
+            await prismaClient.payment.update({
+                where: {
+                    id,
+                },
+                data: {
+                    userId: user.userId,
+                    amount,
+                    date,
+                    payorId,
+                    payeeId,
+                    categoryId,
+                },
+            })
+        } catch (e) {
+            return error(400, "Invalid payment data")
+        }
+
+        return
+    },
+}
+
+function readFormData(formData: FormData) {
+
+    const amount = Math.round(Number(formData.get("amount") as string) * 100)
+    const date = new Date(formData.get("date") as string)
+    const payorId = Number(formData.get("payor") as string)
+    const payeeId = Number(formData.get("payee") as string)
+    const categoryId = Number(formData.get("category") as string)
+
+    return {
+        amount,
+        date,
+        payorId,
+        payeeId,
+        categoryId,
+    }
 }
