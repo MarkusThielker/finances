@@ -85,9 +85,7 @@ export const actions: Actions = {
 
         try {
             await prismaClient.payment.update({
-                where: {
-                    id,
-                },
+                where: {id},
                 data: {
                     userId: user.userId,
                     amount,

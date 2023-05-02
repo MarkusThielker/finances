@@ -204,7 +204,7 @@
                         <div class="flex flex-col w-full">
                             <label for="category">Category</label>
                             <select id="category" name="category" bind:value={category}
-                                    class="input-text w-full bg-white" required>
+                                    class="input-text w-full bg-white">
                                 {#each categories as category}
                                     <option value={category.id}>{category.name}</option>
                                 {/each}
