@@ -1,5 +1,5 @@
 import type { Actions, PageServerLoad } from "./$types"
-import { fail, redirect } from "@sveltejs/kit"
+import { redirect } from "@sveltejs/kit"
 import { auth } from "$lib/server/lucia"
 
 export const load: PageServerLoad = async ({locals, request}) => {
@@ -12,12 +12,21 @@ export const actions: Actions = {
     default: async ({request, locals}) => {
 
         const form = await request.formData()
-        const username = form.get("username")
-        const password = form.get("password")
+        const username = form.get("username") as string
+        const password = form.get("password") as string
 
         // check for empty values
-        if (typeof username !== "string" || typeof password !== "string") {
-            return fail(400)
+        if (username.trim().length == 0 || password.length == 0) {
+            return {
+                error: {
+                    username: username.length == 0
+                        ? "Username is required"
+                        : undefined,
+                    password: password.length == 0
+                        ? "Password is required"
+                        : undefined,
+                },
+            }
         }
 
         try {
@@ -27,8 +36,11 @@ export const actions: Actions = {
             locals.setSession(session)
 
         } catch {
-            // invalid credentials
-            return fail(400)
+            return {
+                error: {
+                    general: "Invalid username or password",
+                },
+            }
         }
     },
 }
