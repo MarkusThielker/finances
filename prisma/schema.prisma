@@ -77,6 +77,7 @@ model Payment {
   payorId    Int       @map("payor_id")
   payee      Entity    @relation("PayeeEntity", fields: [payeeId], references: [id])
   payeeId    Int       @map("payee_id")
+  note       String?
   category   Category? @relation(fields: [categoryId], references: [id])
   categoryId Int?      @map("category_id")
   createdAt  DateTime  @default(now()) @map("created_at")
