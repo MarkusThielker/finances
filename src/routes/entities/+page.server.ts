@@ -29,18 +29,14 @@ export const actions: Actions = {
 
         const {
             name,
-            identifier,
             type,
         } = readFormData(await request.formData())
-
-        console.log("After parse: ", {name, identifier, type})
 
         try {
             await prismaClient.entity.create({
                 data: {
                     userId: user.userId,
                     name,
-                    identifier,
                     type,
                 },
             })
@@ -62,7 +58,6 @@ export const actions: Actions = {
 
         const {
             name,
-            identifier,
             type,
         } = readFormData(formData)
 
@@ -71,7 +66,6 @@ export const actions: Actions = {
                 where: {id},
                 data: {
                     name,
-                    identifier,
                     type,
                 },
             })
@@ -104,12 +98,10 @@ export const actions: Actions = {
 function readFormData(formData: FormData) {
 
     const name = formData.get("name") as string
-    const identifier = formData.get("identifier") as string
     const type = formData.get("type") as EntityType
 
     return {
         name,
-        identifier,
         type,
     }
 }

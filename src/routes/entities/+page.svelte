@@ -12,7 +12,6 @@
     let entityId = -1
 
     let name: string
-    let identifier: string
     let type: EntityType
 
     function openDialog(entity?: Entity) {
@@ -20,13 +19,11 @@
         if (entity) {
             entityId = entity.id
             name = entity.name
-            identifier = entity.identifier
             type = entity.type
             isEdit = true
         } else {
             entityId = -1
             name = ""
-            identifier = ""
             type = EntityType.Entity
             isEdit = false
         }
@@ -59,8 +56,6 @@
                             ID
                         </th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Name</th>
-                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Identifier
-                        </th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Type</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Created</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Updated</th>
@@ -75,7 +70,6 @@
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{(i +
                                 1)}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.name}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.identifier}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.type}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.createdAt.toLocaleString()}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.updatedAt.toLocaleString()}</td>
@@ -128,15 +122,6 @@
                         <div class="flex flex-col w-full">
                             <label for="name">Name</label>
                             <input id="name" name="name" class="input-text" bind:value={name} required>
-                        </div>
-
-                    </div>
-
-                    <div class="flex flex-row space-x-2">
-
-                        <div class="flex flex-col w-full">
-                            <label for="identifier">Identifier</label>
-                            <input id="identifier" name="identifier" class="input-text" bind:value={identifier} required>
                         </div>
 
                     </div>
