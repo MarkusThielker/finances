@@ -13,16 +13,18 @@
     let paymentId = -1
 
     let amount = 0
+    let note = ""
+
     let date = new Date()
     let dateString = date.toISOString().split("T")[0]
 
-    let payors = data.entities
+    let payors = data?.entities
     let payor = payors[0]?.id
 
-    let payees = data.entities
+    let payees = data?.entities
     let payee = payees[1]?.id
 
-    let categories = data.categories
+    let categories = data?.categories
     let category = categories[0]?.id
 
     function openDialog(payment?: Payment) {
@@ -35,6 +37,7 @@
             payor = payment.payorId
             payee = payment.payeeId
             category = payment.categoryId
+            note = payment.note ?? ""
             isEdit = true
         } else {
             paymentId = -1
@@ -44,6 +47,7 @@
             payor = payors[0]?.id ?? -1
             payee = payees[1]?.id ?? -1
             category = categories[0]?.id ?? -1
+            note = ""
             isEdit = false
         }
 
@@ -89,8 +93,7 @@
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Payor</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Payee</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Category</th>
-                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Created</th>
-                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Updated</th>
+                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Note</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col"></th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col"></th>
                     </tr>
@@ -114,15 +117,14 @@
                                     </td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payor?.name}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payee?.name}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 inline-flex items-center">
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 inline-flex">
                                         <svg class="h-5 mr-2" fill={payment.category?.color} viewBox="0 0 20 20"
                                              xmlns="http://www.w3.org/2000/svg">
                                             <circle cx="10" cy="10" r="10"/>
                                         </svg>
                                         {payment.category?.name}
                                     </td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.createdAt.toLocaleString()}</td>
-                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.updatedAt.toLocaleString()}</td>
+                                    <td class="px-3 py-4 text-sm text-gray-500 max-w-sm">{payment.note ?? ""}</td>
                                     <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                                         <button class="btn-text-primary" on:click={() => openDialog(payment)}>
                                             Edit
@@ -229,6 +231,16 @@
                                     <option value={category.id}>{category.name}</option>
                                 {/each}
                             </select>
+                        </div>
+
+                    </div>
+
+                    <div class="flex flex-row space-x-2">
+
+                        <div class="flex flex-col w-full">
+                            <label for="note">Note</label>
+                            <textarea id="note" name="note" bind:value={note}
+                                      class="rounded-xl border px-2 py-1 w-full bg-white"></textarea>
                         </div>
 
                     </div>

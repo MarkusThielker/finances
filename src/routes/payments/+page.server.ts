@@ -61,6 +61,7 @@ export const actions: Actions = {
             date,
             payorId,
             payeeId,
+            note,
             categoryId
         } = readFormData(await request.formData())
 
@@ -72,6 +73,7 @@ export const actions: Actions = {
                     date,
                     payorId,
                     payeeId,
+                    note,
                     categoryId,
                 },
             })
@@ -96,6 +98,7 @@ export const actions: Actions = {
             date,
             payorId,
             payeeId,
+            note,
             categoryId
         } = readFormData(formData)
 
@@ -108,6 +111,7 @@ export const actions: Actions = {
                     date,
                     payorId,
                     payeeId,
+                    note,
                     categoryId,
                 },
             })
@@ -142,6 +146,7 @@ function readFormData(formData: FormData) {
     const date = new Date(formData.get("date") as string)
     const payorId = Number(formData.get("payor") as string)
     const payeeId = Number(formData.get("payee") as string)
+    const note = formData.get("note") as string
     const categoryId = Number(formData.get("category") as string)
 
     return {
@@ -149,6 +154,7 @@ function readFormData(formData: FormData) {
         date,
         payorId,
         payeeId,
+        note,
         categoryId,
     }
 }
