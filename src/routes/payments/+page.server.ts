@@ -2,6 +2,7 @@ import type { Actions, PageServerLoad } from "./$types"
 import { error, redirect } from "@sveltejs/kit"
 import { LOGIN_URL } from "$lib/constants"
 import { prismaClient } from "$lib/server/prisma"
+import type { Payment } from "@prisma/client";
 
 export const load: PageServerLoad = async ({locals}) => {
 
@@ -21,6 +22,20 @@ export const load: PageServerLoad = async ({locals}) => {
     payments = payments.sort(
         (a, b) => b.date.getTime() - a.date.getTime())
 
+    const paymentsGrouped = new Map<number, Map<number, Payment[]>>()
+    for (let payment of payments) {
+
+        const year = payment.date.getFullYear()
+        const month = payment.date.getMonth()
+
+        const paymentsInYear: Map<number, Payment[]> = paymentsGrouped.get(year) ?? new Map<number, Payment[]>()
+        const paymentsInMonth: Payment[] = paymentsInYear.get(month) ?? []
+        paymentsInMonth.push(payment)
+
+        paymentsInYear.set(month, paymentsInMonth)
+        paymentsGrouped.set(year, paymentsInYear)
+    }
+
     let entities = await prismaClient.entity.findMany(
         {where: {userId: user.userId}})
     let categories = await prismaClient.category.findMany(
@@ -29,6 +44,7 @@ export const load: PageServerLoad = async ({locals}) => {
     return {
         user,
         payments,
+        paymentsGrouped,
         entities,
         categories,
     }

@@ -50,6 +50,12 @@
         dialogVisible = true
     }
 
+    function getMonthName(monthNumber) {
+        const date = new Date();
+        date.setMonth(monthNumber);
+        return date.toLocaleString('en-US', {month: 'long'});
+    }
+
 </script>
 
 
@@ -90,48 +96,58 @@
                     </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
+                    {#each [...data.paymentsGrouped] as [year, paymentsInYear]}
 
-                    {#each data.payments as payment}
-                        <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{payment.id}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.date.toLocaleDateString()}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                {
-                                    new Intl.NumberFormat("de-DE", {
-                                        style: "currency",
-                                        currency: payment.currency
-                                    }).format(Number(payment.amount) / 100)
-                                }
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payor?.name}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payee?.name}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 inline-flex items-center">
-                                <svg class="h-5 mr-2" fill={payment.category?.color} viewBox="0 0 20 20"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="10" cy="10" r="10"/>
-                                </svg>
-                                {payment.category?.name}
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.createdAt.toLocaleString()}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.updatedAt.toLocaleString()}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <button class="btn-text-primary" on:click={() => openDialog(payment)}>
-                                    Edit
-                                </button>
-                            </td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                                <form method="POST" action="?/remove">
+                        {#each [...paymentsInYear] as [month, paymentsInMonth]}
 
-                                    <input type="hidden" id="id" name="id" value={payment.id}>
+                            {#each paymentsInMonth as payment}
+                                <tr>
+                                    <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{payment.id}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.date.toLocaleDateString()}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        {
+                                            new Intl.NumberFormat("de-DE", {
+                                                style: "currency",
+                                                currency: payment.currency
+                                            }).format(Number(payment.amount) / 100)
+                                        }
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payor?.name}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.payee?.name}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500 inline-flex items-center">
+                                        <svg class="h-5 mr-2" fill={payment.category?.color} viewBox="0 0 20 20"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="10" cy="10" r="10"/>
+                                        </svg>
+                                        {payment.category?.name}
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.createdAt.toLocaleString()}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{payment.updatedAt.toLocaleString()}</td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        <button class="btn-text-primary" on:click={() => openDialog(payment)}>
+                                            Edit
+                                        </button>
+                                    </td>
+                                    <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                                        <form method="POST" action="?/remove">
 
-                                    <button type="submit" class="btn-text-primary">
-                                        Remove
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
+                                            <input type="hidden" id="id" name="id" value={payment.id}>
+
+                                            <button type="submit" class="btn-text-primary">
+                                                Remove
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            {/each}
+
+                            <tr>
+                                <td class="bg-gray-200 px-16 py-2 font-semibold text-gray-500" colspan="10">All
+                                    transactions of {getMonthName(month)} {year}</td>
+                            </tr>
+
+                        {/each}
                     {/each}
-
                     </tbody>
                 </table>
             </div>
@@ -141,7 +157,8 @@
 
 {#if dialogVisible}
 
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" transition:fade={{duration: 100}}></div>
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+         transition:fade={{duration: 100}}></div>
 
     <div class="fixed inset-0 z-10 overflow-y-auto" transition:fade={{duration: 100}}>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
@@ -165,7 +182,8 @@
 
                         <div class="flex flex-col w-full">
                             <label for="date">Date</label>
-                            <input class="input-text" id="date" name="date" type="date" bind:value={dateString}
+                            <input class="input-text" id="date" name="date" type="date"
+                                   bind:value={dateString}
                                    on:change={(event) => {
                                     event.preventDefault()
                                 date = new Date(event.target.value)
@@ -179,7 +197,8 @@
 
                         <div class="flex flex-col w-full">
                             <label for="payor">Payor</label>
-                            <select id="payor" name="payor" bind:value={payor} class="input-text w-full bg-white"
+                            <select id="payor" name="payor" bind:value={payor}
+                                    class="input-text w-full bg-white"
                                     required>
                                 {#each payors as payor}
                                     <option value={payor.id}>{payor.name}</option>
@@ -189,7 +208,8 @@
 
                         <div class="flex flex-col w-full">
                             <label for="payee">Payee</label>
-                            <select id="payee" name="payee" bind:value={payee} class="input-text bg-white" required>
+                            <select id="payee" name="payee" bind:value={payee}
+                                    class="input-text bg-white" required>
                                 {#each payees as payee}
                                     <option value={payee.id}>{payee.name}</option>
                                 {/each}
