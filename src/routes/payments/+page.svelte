@@ -3,6 +3,7 @@
     import { fade } from "svelte/transition"
     import MoneyInput from "$lib/components/MoneyInput.svelte"
     import type { Payment } from "@prisma/client"
+    import Autocomplete from "$lib/components/Autocomplete.svelte"
 
     /**@type {import("./$types").PageData}*/
     export let data
@@ -204,24 +205,11 @@
                     <div class="flex flex-row space-x-2">
 
                         <div class="flex flex-col w-full">
-                            <label for="payor">Payor</label>
-                            <select id="payor" name="payor" bind:value={payor}
-                                    class="input-text w-full bg-white"
-                                    required>
-                                {#each payors as payor}
-                                    <option value={payor.id}>{payor.name}</option>
-                                {/each}
-                            </select>
+                            <Autocomplete name="payor" label="Payor" bind:value="{payor}" options={payors}/>
                         </div>
 
                         <div class="flex flex-col w-full">
-                            <label for="payee">Payee</label>
-                            <select id="payee" name="payee" bind:value={payee}
-                                    class="input-text bg-white" required>
-                                {#each payees as payee}
-                                    <option value={payee.id}>{payee.name}</option>
-                                {/each}
-                            </select>
+                            <Autocomplete name="payee" label="Payee" bind:value="{payee}" options={payees}/>
                         </div>
 
                     </div>
@@ -230,13 +218,7 @@
                     <div class="flex flex-row space-x-2">
 
                         <div class="flex flex-col w-full">
-                            <label for="category">Category</label>
-                            <select id="category" name="category" bind:value={category}
-                                    class="input-text w-full bg-white">
-                                {#each categories as category}
-                                    <option value={category.id}>{category.name}</option>
-                                {/each}
-                            </select>
+                            <Autocomplete name="category" label="Category" bind:value="{category}" options={categories}/>
                         </div>
 
                     </div>
