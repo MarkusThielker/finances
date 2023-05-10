@@ -205,11 +205,11 @@
                     <div class="flex flex-row space-x-2">
 
                         <div class="flex flex-col w-full">
-                            <Autocomplete name="payor" label="Payor" bind:value="{payor}" options={payors}/>
+                            <Autocomplete name="payor" label="Payor" bind:value={payor} options={payors}/>
                         </div>
 
                         <div class="flex flex-col w-full">
-                            <Autocomplete name="payee" label="Payee" bind:value="{payee}" options={payees}/>
+                            <Autocomplete name="payee" label="Payee" bind:value={payee} options={payees}/>
                         </div>
 
                     </div>
@@ -218,7 +218,7 @@
                     <div class="flex flex-row space-x-2">
 
                         <div class="flex flex-col w-full">
-                            <Autocomplete name="category" label="Category" bind:value="{category}" options={categories}/>
+                            <Autocomplete name="category" label="Category" bind:value={category} options={categories}/>
                         </div>
 
                     </div>

@@ -47,23 +47,23 @@
 </script>
 
 <div class="relative">
-    <label class="block" for="{name}">{label}</label>
-    <input bind:value="{value}" class="hidden" id="{name}" name="{name}" type="number" />
+    <label class="block" for="{name}-text">{label}</label>
     <input
-            bind:this="{inputRef}"
-            bind:value="{inputValue}"
             class="input-text w-full"
             id="{name}-text"
             name="{name}-text"
-            on:input="{handleInput}"
             placeholder={label}
             type="text"
+            bind:this="{inputRef}"
+            bind:value="{inputValue}"
+            on:input="{handleInput}"
     />
     {#if showOptions}
         <div class="absolute z-10 mt-1 bg-white rounded-xl border w-full">
             {#each filteredOptions as option (option.id)}
-                <div class="p-2 cursor-pointer" on:click="{() => selectOption(option)}">{option.name}</div>
+                <div class="p-2 cursor-pointer" on:click={() => selectOption(option)}>{option.name}</div>
             {/each}
         </div>
     {/if}
+    <input bind:value={value} class="hidden" id={name} name={name} type="number" />
 </div>
