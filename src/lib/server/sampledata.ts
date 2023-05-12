@@ -71,7 +71,6 @@ export async function createSampleData(
             data: {
                 userId: userId,
                 name: "Main Account",
-                identifier: "DE23894788934786293762",
                 type: EntityType.Account,
             },
         }))
@@ -80,7 +79,6 @@ export async function createSampleData(
             data: {
                 userId: userId,
                 name: "Company",
-                identifier: "company",
                 type: EntityType.Entity,
             },
         }))
@@ -89,7 +87,6 @@ export async function createSampleData(
             data: {
                 userId: userId,
                 name: "Supermarket 1",
-                identifier: "sm_1",
                 type: EntityType.Entity,
             },
         }))
@@ -98,7 +95,6 @@ export async function createSampleData(
             data: {
                 userId: userId,
                 name: "Supermarket 2",
-                identifier: "sm_2",
                 type: EntityType.Entity,
             },
         }))
@@ -107,7 +103,6 @@ export async function createSampleData(
             data: {
                 userId: userId,
                 name: "Supermarket 3",
-                identifier: "sm_3",
                 type: EntityType.Entity,
             },
         }))
@@ -116,7 +111,6 @@ export async function createSampleData(
             data: {
                 userId: userId,
                 name: "Supermarket 4",
-                identifier: "sm_4",
                 type: EntityType.Entity,
             },
         }))
