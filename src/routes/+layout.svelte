@@ -2,7 +2,7 @@
 
     import "$lib/styles/app.css"
     import type { LayoutData } from "./$types"
-    import { LOGIN_URL, SIGNUP_URL } from "../lib/constants"
+    import { LOGIN_URL, SIGNUP_URL } from "$lib/constants"
 
     export let data: LayoutData
 
