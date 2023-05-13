@@ -2,6 +2,7 @@
 
     import { fade } from "svelte/transition"
     import { Entity, EntityType } from "@prisma/client"
+    import Dropdown from "$lib/components/Dropdown.svelte"
 
     /**@type {import("./$types").PageData}*/
     export let data
@@ -13,6 +14,7 @@
 
     let name: string
     let type: EntityType
+    const types = Object.values(EntityType)
 
     function openDialog(entity?: Entity) {
 
@@ -135,13 +137,7 @@
                     <div class="flex flex-row space-x-2">
 
                         <div class="flex flex-col w-full">
-                            <label for="type">Type</label>
-                            <select id="type" name="type" bind:value={type}
-                                    class="input-text w-full bg-white" required>
-                                {#each Object.values(EntityType) as entityType}
-                                    <option value={entityType.toString()}>{entityType}</option>
-                                {/each}
-                            </select>
+                            <Dropdown name="type" label="Type" bind:value={type} options={types}/>
                         </div>
 
                     </div>
