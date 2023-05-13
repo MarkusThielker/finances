@@ -4,7 +4,7 @@ import { auth } from "$lib/server/lucia"
 
 export const load: PageServerLoad = async ({locals, request}) => {
     const session = await locals.validate()
-    if (session) throw redirect(302, "/account")
+    if (session) throw redirect(302, "/")
     return {}
 }
 
