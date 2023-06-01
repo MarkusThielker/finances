@@ -19,5 +19,5 @@
 }
 
 .input-text {
-    @apply shape-rounded border px-2 py-1;
+    @apply shape-rounded border border-neutral-200 px-2 py-1;
 }
