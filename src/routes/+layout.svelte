@@ -85,8 +85,7 @@
                                     <ul role="list" class="-mx-2 space-y-1">
                                         {#each menuItems as item}
                                             <li>
-                                                <!-- Current: "bg-orange-600 text-white", Default: "text-white hover:text-white hover:bg-orange-600" -->
-                                                <a href={item.href}
+                                                <a href={item.href} on:click={() => isSidebarOpen = false}
                                                    class="text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold { $page.url.pathname === item.href ? 'bg-orange-600' : 'hover:text-white hover:bg-orange-600' }">
                                                     {@html item.icon}
                                                     {item.name}
@@ -116,7 +115,6 @@
                         <ul class="-mx-2 space-y-1" role="list">
                             {#each menuItems as item}
                                 <li>
-                                    <!-- Current: "bg-orange-600 text-white", Default: "text-white hover:text-white hover:bg-orange-600" -->
                                     <a href={item.href}
                                        class="text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold { $page.url.pathname === item.href ? 'bg-orange-600' : 'hover:text-white hover:bg-orange-600' }">
                                         {@html item.icon}
