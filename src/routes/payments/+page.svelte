@@ -66,7 +66,7 @@
 
 <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
-        <h1 class="text-2xl font-semibold leading-6 text-gray-900">Payments</h1>
+        <h1 class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white">Payments</h1>
     </div>
     <div class="mt-4 sm:ml-16 sm:mt-0 sm:flex-none">
         <button class="btn-primary" on:click={() => {
@@ -166,16 +166,16 @@
 
 {#if dialogVisible}
 
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+    <div class="fixed inset-0 bg-gray-500 dark:bg-neutral-900/80 bg-opacity-75 transition-opacity"
          transition:fade={{duration: 100}}></div>
 
     <div class="fixed inset-0 z-10 overflow-y-auto" transition:fade={{duration: 100}}>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <form
                     method="POST" action="{ isEdit ? '?/update' : '?/create'}"
-                    class="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6">
+                    class="relative transform overflow-hidden rounded-lg bg-white dark:bg-neutral-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6">
 
-                <h1 class="text-2xl font-semibold leading-6 text-gray-900 mb-4">{ isEdit
+                <h1 class="text-2xl font-semibold leading-6 mb-4">{ isEdit
                     ? "Update Payment"
                     : "Create Payment"}</h1>
 
@@ -228,7 +228,7 @@
                         <div class="flex flex-col w-full">
                             <label for="note">Note</label>
                             <textarea id="note" name="note" bind:value={note}
-                                      class="rounded-xl border px-2 py-1 w-full bg-white"></textarea>
+                                      class="input-text-area"></textarea>
                         </div>
 
                     </div>

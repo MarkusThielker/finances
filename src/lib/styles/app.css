@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+    @apply bg-white dark:bg-neutral-900 text-black dark:text-white;
+}
+
 .shape-rounded {
     @apply rounded-full;
 }
@@ -15,9 +19,13 @@
 }
 
 .card {
-    @apply p-8 sm:shadow sm:bg-white rounded-3xl;
+    @apply p-8 sm:bg-white dark:sm:bg-neutral-900 sm:border sm:border-gray-200 dark:sm:border-neutral-700 rounded-3xl;
 }
 
 .input-text {
-    @apply shape-rounded border border-neutral-200 px-2 py-1;
+    @apply shape-rounded border border-gray-200 dark:border-neutral-700  px-2 py-1 bg-white dark:bg-neutral-800/25 text-black dark:text-white;
+}
+
+.input-text-area {
+    @apply rounded-xl border border-gray-200 dark:border-neutral-700  px-2 py-1 bg-white dark:bg-neutral-800/25 text-black dark:text-white;
 }

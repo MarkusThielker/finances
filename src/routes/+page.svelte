@@ -15,7 +15,7 @@
 
         <button type="button" on:click={() => scopeOptionsVisible = !scopeOptionsVisible}
                 class="flex cursor-pointer shape-rounded w-full py-1.5 px-4 text-gray-900 border">
-            <span class="w-full text-start">{data.scope}</span>
+            <span class="w-full text-start text-black dark:text-white">{data.scope}</span>
             <span class="flex items-center">
                 <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
                     <path fill-rule="evenodd" clip-rule="evenodd"
@@ -26,7 +26,7 @@
 
         {#if scopeOptionsVisible}
 
-            <div class="absolute w-full z-10 mt-1 py-2 max-h-60 overflow-auto rounded-3xl bg-white border"
+            <div class="absolute w-full z-10 mt-1 py-2 max-h-60 overflow-auto rounded-3xl bg-white dark:bg-neutral-900 border"
                  transition:fade={{duration: 100}}>
 
                 {#each data.scopes as option, i}
@@ -35,10 +35,10 @@
                         <input type="hidden" name="scope" value={option}>
 
                         <button type="submit" on:click={() => scopeOptionsVisible = false}
-                                class="text-gray-900 relative cursor-default select-none py-2 pl-4 pr-10 cursor-pointer hover:bg-gray-100 w-full text-left"
+                                class="text-gray-900 relative select-none py-2 pl-4 pr-10 cursor-pointer hover:bg-orange-500/25 w-full text-left"
                                 in:fly={{duration: 100, delay: i * 45}} out:fade={{duration: 100}}
                         >
-                            <span>{option}</span>
+                            <span class="text-black dark:text-white">{option}</span>
                             {#if option === data.scope}
                                 <span class="text-indigo-600 absolute inset-y-0 right-0 flex items-center pr-4">
                                     <svg class="h-5 w-5" viewBox="0 0 20 20" fill="#FF4500">

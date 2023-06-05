@@ -24,7 +24,7 @@
         {value ? value : "Select an option"}
     </div>
     {#if showOptions}
-        <div class="absolute z-10 mt-1 bg-white rounded-xl border w-full">
+        <div class="absolute z-10 mt-1 bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-neutral-700 w-full">
             {#each options as option}
                 <div class="p-2 cursor-pointer" on:click={() => selectOption(option)}>{option}</div>
             {/each}
