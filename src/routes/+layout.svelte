@@ -63,7 +63,7 @@
 
                 <div class="relative mr-16 flex w-full max-w-xs flex-1">
 
-                    <div class="absolute flex w-16 justify-center pt-5">
+                    <div class="absolute left-full flex w-16 justify-center pt-5">
                         <button type="button" class="-m-2.5 p-2.5" on:click={() => isSidebarOpen = !isSidebarOpen}>
                             <span class="sr-only">Close sidebar</span>
                             <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
