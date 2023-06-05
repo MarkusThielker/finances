@@ -4,6 +4,7 @@
     import type { LayoutData } from "./$types"
     import { LOGIN_URL, SIGNUP_URL } from "$lib/constants"
     import { page } from "$app/stores"
+    import { fade, fly } from "svelte/transition"
 
     export let data: LayoutData
 
@@ -58,8 +59,8 @@
     {#if isSidebarOpen}
         <div class="relative z-50 lg:hidden">
 
-            <div class="fixed inset-0 bg-gray-900/80"></div>
-            <div class="fixed inset-0 flex">
+            <div class="fixed inset-0 bg-gray-900/80" transition:fade={{duration: 200}}></div>
+            <div class="fixed inset-0 flex" transition:fly={{duration: 200, x: -300}}>
 
                 <div class="relative mr-16 flex w-full max-w-xs flex-1">
 
