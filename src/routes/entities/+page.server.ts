@@ -27,17 +27,11 @@ export const actions: Actions = {
         const {user} = await locals.validateUser()
         if (!user) throw redirect(302, LOGIN_URL)
 
-        const {
-            name,
-            type,
-        } = readFormData(await request.formData())
-
         try {
             await prismaClient.entity.create({
                 data: {
                     userId: user.userId,
-                    name,
-                    type,
+                    ...readFormData(await request.formData()),
                 },
             })
         } catch (e) {
@@ -56,17 +50,11 @@ export const actions: Actions = {
         const id = Number(formData.get("id") as string)
         if (!id) return error(400, "Invalid entity id")
 
-        const {
-            name,
-            type,
-        } = readFormData(formData)
-
         try {
             await prismaClient.entity.update({
                 where: {id},
                 data: {
-                    name,
-                    type,
+                    ...readFormData(formData),
                 },
             })
         } catch (e) {

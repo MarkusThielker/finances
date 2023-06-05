@@ -56,25 +56,11 @@ export const actions: Actions = {
         const {user} = await locals.validateUser()
         if (!user) throw redirect(302, LOGIN_URL)
 
-        const {
-            amount,
-            date,
-            payorId,
-            payeeId,
-            note,
-            categoryId
-        } = readFormData(await request.formData())
-
         try {
             await prismaClient.payment.create({
                 data: {
                     userId: user.userId,
-                    amount,
-                    date,
-                    payorId,
-                    payeeId,
-                    note,
-                    categoryId,
+                    ...readFormData(await request.formData()),
                 },
             })
         } catch (e) {
@@ -93,26 +79,11 @@ export const actions: Actions = {
         const id = Number(formData.get("id") as string)
         if (!id) return error(400, "Invalid payment id")
 
-        const {
-            amount,
-            date,
-            payorId,
-            payeeId,
-            note,
-            categoryId
-        } = readFormData(formData)
-
         try {
             await prismaClient.payment.update({
                 where: {id},
                 data: {
-                    userId: user.userId,
-                    amount,
-                    date,
-                    payorId,
-                    payeeId,
-                    note,
-                    categoryId,
+                    ...readFormData(formData),
                 },
             })
         } catch (e) {

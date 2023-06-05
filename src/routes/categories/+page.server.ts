@@ -26,17 +26,11 @@ export const actions: Actions = {
         const {user} = await locals.validateUser()
         if (!user) throw redirect(302, LOGIN_URL)
 
-        const {
-            name,
-            color,
-        } = readFormData(await request.formData())
-
         try {
             await prismaClient.category.create({
                 data: {
                     userId: user.userId,
-                    name,
-                    color,
+                    ...readFormData(await request.formData()),
                 },
             })
         } catch (e) {
@@ -55,17 +49,11 @@ export const actions: Actions = {
         const id = Number(formData.get("id") as string)
         if (!id) return error(400, "Invalid category id")
 
-        const {
-            name,
-            color
-        } = readFormData(formData)
-
         try {
             await prismaClient.category.update({
                 where: {id},
                 data: {
-                    name,
-                    color,
+                    ...readFormData(formData),
                 },
             })
         } catch (e) {
