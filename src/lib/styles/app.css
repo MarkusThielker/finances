@@ -19,7 +19,7 @@ body {
 }
 
 .card {
-    @apply p-8 sm:bg-white dark:sm:bg-neutral-900 sm:border sm:border-gray-200 dark:sm:border-neutral-700 rounded-3xl;
+    @apply p-8 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-3xl;
 }
 
 .input-text {
