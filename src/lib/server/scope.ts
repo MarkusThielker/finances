@@ -26,22 +26,25 @@ export class Scope {
 
         switch (type) {
             case ScopeType.ThisMonth:
-                start = new Date(today.getFullYear(), today.getMonth(), 1, 2, 0, 0, 0)
-                end = new Date(today.getFullYear(), today.getMonth() + 1, 0, 26, 0, 0, -1)
+                start = new Date(today.getFullYear(), today.getMonth(), 1, 0, 0, 0, 0)
+                end = new Date(today.getFullYear(), today.getMonth() + 1, 0, 24, 0, 0, -1)
                 break
             case ScopeType.LastMonth:
-                start = new Date(today.getFullYear(), today.getMonth() - 1, 1, 1, 0, 0, 0)
-                end = new Date(today.getFullYear(), today.getMonth(), 0, 26, 0, 0, -1)
+                start = new Date(today.getFullYear(), today.getMonth() - 1, 1, 0, 0, 0, 0)
+                end = new Date(today.getFullYear(), today.getMonth(), 0, 24, 0, 0, -1)
                 break
             case ScopeType.ThisYear:
-                start = new Date(today.getFullYear(), 0, 1, 1, 0, 0, 0)
-                end = new Date(today.getFullYear(), 11, 31, 25, 0, 0, -1)
+                start = new Date(today.getFullYear(), 0, 1, 0, 0, 0, 0)
+                end = new Date(today.getFullYear(), 11, 31, 24, 0, 0, -1)
                 break
             case ScopeType.LastYear:
-                start = new Date(today.getFullYear() - 1, 0, 1, 1, 0, 0, 0)
-                end = new Date(today.getFullYear() - 1, 11, 31, 25, 0, 0, -1)
+                start = new Date(today.getFullYear() - 1, 0, 1, 0, 0, 0, 0)
+                end = new Date(today.getFullYear() - 1, 11, 31, 24, 0, 0, -1)
                 break
         }
+
+        console.log("start: ", start.toLocaleString())
+        console.log("end: ", end.toLocaleString())
 
         return new Scope(type, start, end)
     }
