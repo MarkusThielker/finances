@@ -36,5 +36,22 @@ This is a simple finances tracker that I use to keep track of my finances.
 
 # Deployment
 
-Yet, there is no deployment setup. I am planning to deploy the application to my server in the near future
-and will share the setup and configuration when it's done.
+The application is deployed using docker. The docker-compose.yaml file contains the configuration for the application
+and the database. The application is available through an external traefik reverse proxy. The traefik configuration
+is not part of this repository.
+
+To deploy the application, the image for the SvelteKit app is built and exported. The image, docker-compose.yaml
+and .env file form 'docker/finances-prod/' is then copied to the remote server, where the image is loaded and the application
+is started.
+
+The docker-compose file uses the image with the :latest tag. This is automatically set to the uploaded image when the
+image is loaded. Notice: This leads to a stack of images from previous version on the remote server!
+
+The described steps are already automated in the deploy.sh script. The commands for the remote host are defined in 
+deploy-remote.sh. To adapt the scripts to your needs, you need to change the variables in the beginning of the deploy.sh
+script. The used image version is be set as a script parameter.
+
+To deploy the application, run the following command:
+```shell
+  sudo sh ./deploy.sh x.x.x
+```
