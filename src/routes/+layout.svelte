@@ -5,7 +5,7 @@
     import { LOGIN_URL, SIGNUP_URL } from "$lib/constants"
     import { page } from "$app/stores"
     import { fade, fly } from "svelte/transition"
-    import { browser } from "$app/environment"
+    import { browser, version } from "$app/environment"
 
     export let data: LayoutData
 
@@ -111,6 +111,9 @@
                                         {/each}
                                     </ul>
                                 </li>
+                                <li class="mt-auto">
+                                    <p class="text-orange-300">Version {version}</p>
+                                </li>
                             </ul>
                         </nav>
                     </div>
@@ -140,6 +143,9 @@
                                 </li>
                             {/each}
                         </ul>
+                    </li>
+                    <li class="mt-auto">
+                        <p class="text-orange-300">Version {version}</p>
                     </li>
                 </ul>
             </nav>
