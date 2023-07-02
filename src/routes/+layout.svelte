@@ -92,10 +92,10 @@
                     </div>
 
                     <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-orange-500 px-6 pb-4">
-                        <div class="flex h-16 shrink-0 items-center">
+                        <a href="/" class="flex h-16 shrink-0 items-center" on:click={() => isSidebarOpen = false}>
                             <img class="h-12 w-auto" src="/logo_white.png"
                                  alt="Logo of Markus Thielker: a M and a T between curly braces.">
-                        </div>
+                        </a>
                         <nav class="flex flex-1 flex-col">
                             <ul role="list" class="flex flex-1 flex-col gap-y-7">
                                 <li>
@@ -125,10 +125,10 @@
     <!-- Static sidebar for desktop -->
     <div class="hidden lg:fixed lg:inset-y-0 lg:z-50 lg:flex lg:w-72 lg:flex-col">
         <div class="flex grow flex-col gap-y-5 overflow-y-auto bg-orange-500 px-6 pb-4">
-            <div class="flex h-16 shrink-0 items-center">
+            <a class="flex h-16 shrink-0 items-center" href="/">
                 <img alt="Logo of Markus Thielker: a M and a T between curly braces." class="h-12 w-auto"
                      src="/logo_white.png">
-            </div>
+            </a>
             <nav class="flex flex-1 flex-col">
                 <ul class="flex flex-1 flex-col gap-y-7" role="list">
                     <li>
