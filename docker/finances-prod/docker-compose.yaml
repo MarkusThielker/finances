@@ -25,8 +25,29 @@ services:
         condition: service_completed_successfully
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.finances.rule=Host(`finances.thielker.xyz`)"
-      - "traefik.http.routers.finances.entrypoints=web, websecure"
+      - "traefik.http.routers.xyz-finances.rule=Host(`finances.thielker.xyz`)"
+      - "traefik.http.routers.xyz-finances.entrypoints=web, websecure"
+    networks:
+      - web
+      - internal
+
+
+  prisma-studio:
+    container_name: finances_prisma_studio
+    image: finances-prod:latest
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      svelte-migrations:
+        condition: service_completed_successfully
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.xyz-finances-db.rule=Host(`db.finances.thielker.xyz`)"
+      - "traefik.http.routers.xyz-finances-db.entrypoints=web, websecure"
+      - "traefik.http.services.xyz-finances-db.loadbalancer.server.port=5555"
+    command: "npx prisma studio"
     networks:
       - web
       - internal
