@@ -1,0 +1,17 @@
+{
+  "short_name": "Finances",
+  "name": "Finances",
+  "start_url": "/",
+  "icons": [
+    {
+      "src": "favicon.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "background_color": "#FFFFFF",
+  "theme_color": "#FF4500",
+  "display": "standalone",
+  "scope": "/",
+  "description": "A finances application to keep track of my personal spendings"
+}
