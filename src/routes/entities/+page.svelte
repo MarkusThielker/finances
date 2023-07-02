@@ -1,7 +1,7 @@
 <script lang="ts">
 
     import { fade } from "svelte/transition"
-    import { Entity, EntityType } from "@prisma/client"
+    import { Entity } from "@prisma/client"
     import Dropdown from "$lib/components/Dropdown.svelte"
 
     /**@type {import("./$types").PageData}*/
@@ -13,8 +13,8 @@
     let entityId = -1
 
     let name: string
-    let type: EntityType
-    const types = Object.values(EntityType)
+    let type: string
+    const types = ["Entity", "Account"]
 
     function openDialog(entity?: Entity) {
 
@@ -26,7 +26,7 @@
         } else {
             entityId = -1
             name = ""
-            type = EntityType.Entity
+            type = "Entity"
             isEdit = false
         }
 
