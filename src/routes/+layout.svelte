@@ -51,20 +51,20 @@
 
     function switchDarkMode() {
 
-        isDarkMode = !isDarkMode;
-        localStorage.setItem("theme", isDarkMode ? "dark" : "light");
+        isDarkMode = !isDarkMode
+        localStorage.setItem("theme", isDarkMode ? "dark" : "light")
 
         if (browser) {
             if (isDarkMode) {
-                document.documentElement.classList.add('dark');
+                document.documentElement.classList.add("dark")
             } else {
-                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.remove("dark")
             }
         }
     }
 
     if (browser) {
-        isDarkMode = localStorage.getItem("theme") === "dark";
+        isDarkMode = localStorage.getItem("theme") === "dark"
     }
 
 </script>
@@ -113,6 +113,13 @@
                                 </li>
                                 <li class="mt-auto">
                                     <p class="text-orange-300">Version {version}</p>
+                                    <div class="row space-x-2">
+                                        <a href="/changelog" class="text-orange-300 hover:text-orange-200">Changelog</a>
+                                        <a href="https://github.com/markusthielker/finances"
+                                           class="text-orange-300 hover:text-orange-200">
+                                            Source Code
+                                        </a>
+                                    </div>
                                 </li>
                             </ul>
                         </nav>
@@ -146,6 +153,13 @@
                     </li>
                     <li class="mt-auto">
                         <p class="text-orange-300">Version {version}</p>
+                        <div class="row space-x-2">
+                            <a class="text-orange-300 hover:text-orange-200" href="/changelog">Changelog</a>
+                            <a class="text-orange-300 hover:text-orange-200"
+                               href="https://github.com/markusthielker/finances">
+                                Source Code
+                            </a>
+                        </div>
                     </li>
                 </ul>
             </nav>
