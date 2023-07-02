@@ -114,9 +114,14 @@
                                 <li class="mt-auto">
                                     <p class="text-orange-300">Version {version}</p>
                                     <div class="row space-x-2">
-                                        <a href="/changelog" class="text-orange-300 hover:text-orange-200">Changelog</a>
+                                        <a href="/changelog"
+                                           class="text-orange-300 hover:text-orange-200"
+                                           on:click={() => isSidebarOpen = false}>
+                                            Changelog
+                                        </a>
                                         <a href="https://github.com/markusthielker/finances"
-                                           class="text-orange-300 hover:text-orange-200">
+                                           class="text-orange-300 hover:text-orange-200"
+                                           on:click={() => isSidebarOpen = false}>
                                             Source Code
                                         </a>
                                     </div>
