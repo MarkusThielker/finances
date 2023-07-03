@@ -1,7 +1,6 @@
 services:
 
   svelte-migrations:
-    container_name: finances_svelte_migrations
     image: finances-prod:latest
     env_file:
       - .env
@@ -13,7 +12,6 @@ services:
       - internal
 
   svelte:
-    container_name: finances_svelte
     image: finances-prod:latest
     restart: always
     env_file:
@@ -33,7 +31,6 @@ services:
 
 
   prisma-studio:
-    container_name: finances_prisma_studio
     image: finances-prod:latest
     env_file:
       - .env
@@ -53,7 +50,6 @@ services:
       - internal
 
   postgres:
-    container_name: finances_postgres
     image: postgres:15.2
     restart: always
     healthcheck:
