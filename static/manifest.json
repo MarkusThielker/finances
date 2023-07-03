@@ -10,7 +10,7 @@
     }
   ],
   "background_color": "#FFFFFF",
-  "theme_color": "#FF4500",
+  "theme_color": "#F97316",
   "display": "standalone",
   "scope": "/",
   "description": "A finances application to keep track of my personal spendings"
