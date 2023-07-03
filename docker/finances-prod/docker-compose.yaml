@@ -25,6 +25,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.xyz-finances.rule=Host(`finances.thielker.xyz`)"
       - "traefik.http.routers.xyz-finances.entrypoints=web, websecure"
+      - "traefik.http.routers.xyz-finances.tls=true"
+      - "traefik.http.routers.xyz-finances.tls.certresolver=lets-encrypt"
     networks:
       - web
       - internal
@@ -43,6 +45,8 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.xyz-finances-db.rule=Host(`db.finances.thielker.xyz`)"
       - "traefik.http.routers.xyz-finances-db.entrypoints=web, websecure"
+      - "traefik.http.routers.xyz-finances-db.tls=true"
+      - "traefik.http.routers.xyz-finances-db.tls.certresolver=lets-encrypt"
       - "traefik.http.services.xyz-finances-db.loadbalancer.server.port=5555"
     command: "npx prisma studio"
     networks:
