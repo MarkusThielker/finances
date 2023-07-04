@@ -56,9 +56,9 @@
     }
 
     function getMonthName(monthNumber) {
-        const date = new Date();
-        date.setMonth(monthNumber);
-        return date.toLocaleString('en-US', {month: 'long'});
+        const date = new Date()
+        date.setMonth(monthNumber)
+        return date.toLocaleString("en-US", {month: "long"})
     }
 
 </script>
@@ -171,69 +171,46 @@
 
     <div class="fixed inset-0 z-10 overflow-y-auto" transition:fade={{duration: 100}}>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <form
-                    method="POST" action="{ isEdit ? '?/update' : '?/create'}"
-                    class="relative transform overflow-hidden rounded-lg bg-white dark:bg-neutral-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-3xl sm:p-6">
+            <form method="POST" action="{ isEdit ? '?/update' : '?/create'}"
+                  class="relative transform overflow-hidden rounded-lg bg-white dark:bg-neutral-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-3xl sm:p-6">
 
                 <h1 class="text-2xl font-semibold leading-6 mb-4">{ isEdit
                     ? "Update Payment"
                     : "Create Payment"}</h1>
 
-                <div class="flex flex-col space-y-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
 
                     <input type="hidden" name="id" value={paymentId}/>
 
-                    <div class="flex flex-row space-x-2">
+                    <MoneyInput bind:value={amount} name="amount" required="true"/>
 
-                        <div class="flex flex-col w-full">
-                            <MoneyInput bind:value={amount} name="amount" required="true"/>
-                        </div>
-
-                        <div class="flex flex-col w-full">
-                            <label for="date">Date</label>
-                            <input class="input-text" id="date" name="date" type="date"
-                                   bind:value={dateString}
-                                   on:change={(event) => {
-                                    event.preventDefault()
-                                date = new Date(event.target.value)
-                                dateString = date.toISOString().split("T")[0]
-                            }} required/>
-                        </div>
-
+                    <div>
+                        <label for="date">Date</label>
+                        <input class="input-text w-full" id="date" name="date" type="date"
+                               bind:value={dateString}
+                               on:change={(event) => {
+                                   event.preventDefault()
+                                   date = new Date(event.target.value)
+                                   dateString = date.toISOString().split("T")[0]
+                               }}
+                               required
+                        />
                     </div>
 
-                    <div class="flex flex-row space-x-2">
+                    <Autocomplete name="payor" label="Payor" bind:value={payor} options={payors}/>
 
-                        <div class="flex flex-col w-full">
-                            <Autocomplete name="payor" label="Payor" bind:value={payor} options={payors}/>
-                        </div>
+                    <Autocomplete name="payee" label="Payee" bind:value={payee} options={payees}/>
 
-                        <div class="flex flex-col w-full">
-                            <Autocomplete name="payee" label="Payee" bind:value={payee} options={payees}/>
-                        </div>
+                    <Autocomplete name="category" label="Category" bind:value={category} options={categories}/>
 
-                    </div>
-
-
-                    <div class="flex flex-row space-x-2">
-
-                        <div class="flex flex-col w-full">
-                            <Autocomplete name="category" label="Category" bind:value={category} options={categories}/>
-                        </div>
-
-                    </div>
-
-                    <div class="flex flex-row space-x-2">
-
-                        <div class="flex flex-col w-full">
-                            <label for="note">Note</label>
-                            <textarea id="note" name="note" bind:value={note}
-                                      class="input-text-area"></textarea>
-                        </div>
-
+                    <div class="flex flex-col w-full sm:col-span-2">
+                        <label for="note">Note</label>
+                        <textarea id="note" name="note" bind:value={note}
+                                  class="input-text-area"></textarea>
                     </div>
 
                 </div>
+
                 <div class="mt-5 sm:mt-6 grid grid-flow-row-dense grid-cols-2 gap-3">
                     <button type="button"
                             class="btn-text-primary"
