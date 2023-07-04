@@ -121,26 +121,16 @@
                     ? "Update Entity"
                     : "Create Entity"}</h1>
 
-                <div class="flex flex-col space-y-2">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
 
                     <input type="hidden" name="id" value={entityId}/>
 
-                    <div class="flex flex-row space-x-2">
-
-                        <div class="flex flex-col w-full">
-                            <label for="name">Name</label>
-                            <input id="name" name="name" class="input-text" bind:value={name} required>
-                        </div>
-
+                    <div class="flex flex-col">
+                        <label for="name">Name</label>
+                        <input id="name" name="name" class="input-text" bind:value={name} required>
                     </div>
 
-                    <div class="flex flex-row space-x-2">
-
-                        <div class="flex flex-col w-full">
-                            <Dropdown name="type" label="Type" bind:value={type} options={types}/>
-                        </div>
-
-                    </div>
+                    <Dropdown name="type" label="Type" bind:value={type} options={types}/>
 
                 </div>
                 <div class="mt-5 sm:mt-6 grid grid-flow-row-dense grid-cols-2 gap-3">
