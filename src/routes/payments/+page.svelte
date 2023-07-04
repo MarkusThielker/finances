@@ -45,9 +45,9 @@
             amount = 0
             date = new Date()
             dateString = date.toISOString().split("T")[0]
-            payor = payors[0]?.id ?? -1
-            payee = payees[1]?.id ?? -1
-            category = categories[0]?.id ?? -1
+            payor = null
+            payee = null
+            category = null
             note = ""
             isEdit = false
         }
