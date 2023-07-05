@@ -4,7 +4,13 @@ This is a simple finances tracker that I use to keep track of my finances.
 
 # Getting started
 
-1. Start the PostgreSQL database. It will be the backbone of our application and locally available on port 5432. The
+1. Set up the .env file. Therefor a sample is uploaded to the repository. Just copy the .env.sample file to .env and
+   change the values to your needs. The values are used to configure the application and the database connection.
+   ```shell
+   cp .env.sample .env
+   ```
+
+2. Start the PostgreSQL database. It will be the backbone of our application and locally available on port 5432. The
    setup is provided using docker. The credentials can be found in the docker-compose.yaml file.
    ```shell
    cd docker/finances-dev
@@ -12,12 +18,12 @@ This is a simple finances tracker that I use to keep track of my finances.
    cd ../..
    ```
 
-2. Install the npm dependencies:
+3. Install the npm dependencies:
    ```shell
    npm install
    ```
 
-3. After installing the dependencies, you need to apply the database migrations and generate the prisma client.
+4. After installing the dependencies, you need to apply the database migrations and generate the prisma client.
    The initial migrations set up the database scheme for the Lucia authentication. Prisma then generates the client
    based on the database model to provide typed access to the database.
    ```shell
@@ -25,12 +31,12 @@ This is a simple finances tracker that I use to keep track of my finances.
    npx prisma generate # generate the prisma client
    ```
 
-4. Finally, start the development server:
+5. Finally, start the development server:
    ```shell
    npm run dev
    ```
    
-5. To access the application, open the following URL in your browser: http://localhost:3000
+6. To access the application, open the following URL in your browser: http://localhost:3000
    Create an account to access the application. On the account page, you can generate some sample data.
    Now explore the application and customize it to your needs.
 
@@ -49,7 +55,10 @@ image is loaded. Notice: This leads to a stack of images from previous version o
 
 The described steps are already automated in the deploy.sh script. The commands for the remote host are defined in 
 deploy-remote.sh. To adapt the scripts to your needs, you need to change the variables in the beginning of the deploy.sh
-script. The used image version is be set as a script parameter.
+script. The used image version can be set as a script parameter.
+
+Make sure to change the database credentials and the correct ORIGIN variable in the .env file before deploying.
+The ORIGIN has to be the exact URL of the application. Otherwise, the application will not work properly!
 
 To deploy the application, run the following command:
 ```shell
