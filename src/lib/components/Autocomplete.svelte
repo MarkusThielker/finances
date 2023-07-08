@@ -5,9 +5,10 @@
     export let name: string
     export let label: string
     export let value: number | null
+    export let next: HTMLInputElement | null
     export let options: { id: number, name: string }[] = []
+    export let inputRef: HTMLInputElement
 
-    let inputRef: HTMLInputElement
     let inputValue = ""
     let filteredOptions: { id: number, name: string }[] = []
     let showOptions = false
@@ -34,7 +35,6 @@
         if (filteredOptions.length === 1 && !isDelete) {
             selectOption(filteredOptions[0])
             showOptions = false
-            inputRef.blur()
         }
     }
 
@@ -42,6 +42,7 @@
         value = option.id
         inputValue = option.name
         showOptions = false
+        if (next) next.focus(); else inputRef.blur()
     }
 
 </script>

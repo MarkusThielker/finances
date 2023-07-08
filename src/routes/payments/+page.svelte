@@ -24,9 +24,11 @@
 
     let payees = data?.entities
     let payee = payees[1]?.id
+    let payeeRef
 
     let categories = data?.categories
     let category = categories[0]?.id
+    let categoryRef
 
     function openDialog(payment?: Payment) {
 
@@ -197,11 +199,11 @@
                         />
                     </div>
 
-                    <Autocomplete name="payor" label="Payor" bind:value={payor} options={payors}/>
+                    <Autocomplete name="payor" label="Payor" next={payeeRef} bind:value={payor} options={payors}/>
 
-                    <Autocomplete name="payee" label="Payee" bind:value={payee} options={payees}/>
+                    <Autocomplete name="payee" label="Payee" bind:inputRef="{payeeRef}" next={categoryRef} bind:value={payee} options={payees}/>
 
-                    <Autocomplete name="category" label="Category" bind:value={category} options={categories}/>
+                    <Autocomplete name="category" label="Category" bind:inputRef="{categoryRef}" bind:value={category} options={categories}/>
 
                     <div class="flex flex-col w-full sm:col-span-2">
                         <label for="note">Note</label>
