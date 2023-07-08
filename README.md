@@ -7,7 +7,7 @@ This is a simple finances tracker that I use to keep track of my finances.
 1. Set up the .env file. Therefor a sample is uploaded to the repository. Just copy the .env.sample file to .env and
    change the values to your needs. The values are used to configure the application and the database connection.
    ```shell
-   cp .env.sample .env
+   cp .env-sample .env
    ```
 
 2. Start the PostgreSQL database. It will be the backbone of our application and locally available on port 5432. The
@@ -44,7 +44,7 @@ This is a simple finances tracker that I use to keep track of my finances.
 
 The application is deployed using docker. The docker-compose.yaml file contains the configuration for the application
 and the database. The application is available through an external traefik reverse proxy. The traefik configuration
-is not part of this repository.
+is **not** part of this repository.
 
 To deploy the application, the image for the SvelteKit app is built and exported. The image, docker-compose.yaml
 and .env file form 'docker/finances-prod/' is then copied to the remote server, where the image is loaded and the application
@@ -62,5 +62,6 @@ The ORIGIN has to be the exact URL of the application. Otherwise, the applicatio
 
 To deploy the application, run the following command:
 ```shell
-  sudo sh ./deploy.sh x.x.x
+  # don't run this command with sudo to use the ssh keys of the current user
+  sh ./deploy.sh x.x.x
 ```
