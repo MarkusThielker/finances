@@ -55,9 +55,8 @@
                     <thead class="bg-gray-50">
                     <tr>
                         <th class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6" scope="col">
-                            ID
+                            Name
                         </th>
-                        <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Name</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Type</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Created</th>
                         <th class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900" scope="col">Updated</th>
@@ -68,9 +67,7 @@
 
                     {#each data.entities as entity, i}
                         <tr>
-                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">{(i +
-                                1)}</td>
-                            <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.name}</td>
+                            <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-6">{entity.name}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.type}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.createdAt.toLocaleString()}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.updatedAt.toLocaleString()}</td>
