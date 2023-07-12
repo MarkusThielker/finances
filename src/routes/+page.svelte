@@ -60,18 +60,29 @@
 </div>
 
 
-<div class="flex grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-x-8 gap-y-8 items-center justify-center">
-
-    <div class="flex card">
-        <p class="text-xl">Income: <span>{data.income}</span></p>
+<dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg border bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+    <div class="px-4 py-5 sm:p-6">
+        <dt class="text-base font-normal text-gray-900">Income</dt>
+        <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+            <div class="flex items-baseline text-2xl font-semibold text-orange-600">
+                {data.income}
+            </div>
+        </dd>
     </div>
-
-    <div class="flex card">
-        <p class="text-xl">Expenses: <span>{data.expenses}</span></p>
+    <div class="px-4 py-5 sm:p-6">
+        <dt class="text-base font-normal text-gray-900">Expenses</dt>
+        <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+            <div class="flex items-baseline text-2xl font-semibold text-orange-600">
+                {data.expenses}
+            </div>
+        </dd>
     </div>
-
-    <div class="flex card">
-        <p class="text-xl">Development: <span>{data.balanceDevelopment}</span></p>
+    <div class="px-4 py-5 sm:p-6">
+        <dt class="text-base font-normal text-gray-900">Development</dt>
+        <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
+            <div class="flex items-baseline text-2xl font-semibold text-orange-600">
+                {data.balanceDevelopment}
+            </div>
+        </dd>
     </div>
-
-</div>
+</dl>
