@@ -67,7 +67,7 @@
     </div>
 
     <div class="flex card">
-        <p class="text-xl">Expanses: <span>{data.expenses}</span></p>
+        <p class="text-xl">Expenses: <span>{data.expenses}</span></p>
     </div>
 
     <div class="flex card">
