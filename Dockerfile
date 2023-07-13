@@ -11,6 +11,7 @@ COPY . .
 COPY prisma/ ./prisma/
 RUN npx prisma generate
 
+RUN apt update -y && apt install openssl -y
 RUN npm run build
 
 EXPOSE 3000
