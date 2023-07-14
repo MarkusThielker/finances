@@ -222,7 +222,7 @@
                     </button>
 
                     <!-- Separator -->
-                    <div aria-hidden="true" class="hidden lg:block lg:h-6 lg:w-px lg:bg-gray-900/10"></div>
+                    <div aria-hidden="true" class="h-6 w-px bg-gray-900/10"></div>
 
                     <!-- Profile dropdown -->
                     <div class="relative space-x-4">
