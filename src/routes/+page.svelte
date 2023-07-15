@@ -60,9 +60,9 @@
 </div>
 
 
-<dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 overflow-hidden rounded-lg border bg-white shadow md:grid-cols-3 md:divide-x md:divide-y-0">
+<dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 dark:divide-gray-700 overflow-hidden rounded-lg border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 shadow md:grid-cols-3 md:divide-x md:divide-y-0">
     <div class="px-4 py-5 sm:p-6">
-        <dt class="text-base font-normal text-gray-900">Income</dt>
+        <dt class="text-base font-normal">Income</dt>
         <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
             <div class="flex items-baseline text-2xl font-semibold text-orange-600">
                 {data.income}
@@ -70,7 +70,7 @@
         </dd>
     </div>
     <div class="px-4 py-5 sm:p-6">
-        <dt class="text-base font-normal text-gray-900">Expenses</dt>
+        <dt class="text-base font-normal">Expenses</dt>
         <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
             <div class="flex items-baseline text-2xl font-semibold text-orange-600">
                 {data.expenses}
@@ -78,7 +78,7 @@
         </dd>
     </div>
     <div class="px-4 py-5 sm:p-6">
-        <dt class="text-base font-normal text-gray-900">Development</dt>
+        <dt class="text-base font-normal">Development</dt>
         <dd class="mt-1 flex items-baseline justify-between md:block lg:flex">
             <div class="flex items-baseline text-2xl font-semibold text-orange-600">
                 {data.balanceDevelopment}
