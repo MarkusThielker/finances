@@ -14,7 +14,7 @@
     <div class="relative mt-1 w-48">
 
         <button type="button" on:click={() => scopeOptionsVisible = !scopeOptionsVisible}
-                class="flex cursor-pointer shape-rounded w-full py-1.5 px-4 text-gray-900 border">
+                class="flex cursor-pointer shape-rounded w-full py-1.5 px-4 text-gray-900 border border-gray-200 dark:border-gray-700">
             <span class="w-full text-start text-black dark:text-white">{data.scope}</span>
             <span class="flex items-center">
                 <svg class="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
@@ -26,7 +26,7 @@
 
         {#if scopeOptionsVisible}
 
-            <div class="absolute w-full z-10 mt-1 py-2 max-h-60 overflow-auto rounded-3xl bg-white dark:bg-neutral-900 border"
+            <div class="absolute w-full z-10 mt-1 py-2 max-h-60 overflow-auto rounded-3xl bg-white dark:bg-neutral-900 border border-gray-200 dark:border-gray-700"
                  transition:fade={{duration: 100}}>
 
                 {#each data.scopes as option, i}
