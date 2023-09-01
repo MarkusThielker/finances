@@ -2,8 +2,9 @@ import type { Actions, PageServerLoad } from "./$types"
 import { redirect } from "@sveltejs/kit"
 import { LOGIN_URL } from "$lib/constants"
 import { prismaClient } from "$lib/server/prisma"
-import { EntityType } from "@prisma/client"
+import { EntityType, type Category } from "@prisma/client"
 import { Scope, ScopeType } from "$lib/server/scope"
+import { type } from "os"
 
 export const load: PageServerLoad = async ({locals}) => {
 
@@ -41,6 +42,64 @@ export const load: PageServerLoad = async ({locals}) => {
         payment.payee.type === EntityType.Entity,
     ).forEach(payment => expenses += payment.amount)
 
+    type CategoryNumber = {
+        category: Category,
+        value: number,
+    }
+
+    const categoryExpanses: CategoryNumber[] = []
+    let categoryPercentages: CategoryNumber[] = []
+    const other: CategoryNumber = { 
+        category: {
+            id: 0,
+            userId: "",
+            name: "Other",
+            color: "#444444",
+            createdAt: new Date(),
+            updatedAt: new Date()
+        },
+        value: 0
+    }
+    payments.filter(payment =>
+        payment.payor.type === EntityType.Account &&
+        payment.payee.type === EntityType.Entity,
+    ).forEach(payment => {
+
+        if (!payment.category) {
+            other.value += Number(payment.amount)
+            return
+        }
+
+        const categoryNumber = categoryExpanses.find(categoryNumber => categoryNumber.category.id === payment.category?.id)
+        if (categoryNumber) {
+            categoryNumber.value += Number(payment.amount)
+        } else {
+            categoryExpanses.push({category: payment.category, value: Number(payment.amount)})
+        }
+    })
+    categoryExpanses.sort((a, b) => b.value - a.value)
+
+    categoryExpanses.forEach(categoryNumber => {
+        categoryPercentages.push({
+            category: categoryNumber.category,
+            value: Number((Number(categoryNumber.value) / Number(expenses) * 100).toFixed(2)),
+        })
+    })
+    if (other.value > 0) categoryExpanses.push(other)
+
+    categoryPercentages = categoryPercentages.map(categoryNumber => {
+        if (categoryNumber.value < 5) {
+            other.value += categoryNumber.value
+            return null
+        }
+        return categoryNumber
+    }).filter(categoryNumber => categoryNumber !== null) as CategoryNumber[]
+
+    console.log(categoryPercentages)
+    console.log(other.value)
+
+    categoryPercentages.push(other)
+
     const balanceDevelopment = income - expenses
     const scopes = Object.values(ScopeType).
         map(scopeType => scopeType.toString())
@@ -61,6 +120,14 @@ export const load: PageServerLoad = async ({locals}) => {
             style: "currency",
             currency: "EUR",
         }).format(Number(balanceDevelopment) / 100),
+        categoryExpanses: categoryExpanses.map(categoryNumber => ({
+            category: categoryNumber.category,
+            value: new Intl.NumberFormat("de-DE", {
+                style: "currency",
+                currency: "EUR",
+            }).format(Number(categoryNumber.value) / 100),
+        })),
+        categoryPercentages: categoryPercentages
     }
 }
 
