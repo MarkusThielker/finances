@@ -47,7 +47,7 @@ export const load: PageServerLoad = async ({locals}) => {
         value: number,
     }
 
-    const categoryExpanses: CategoryNumber[] = []
+    const categoryExpenses: CategoryNumber[] = []
     let categoryPercentages: CategoryNumber[] = []
     const other: CategoryNumber = { 
         category: {
@@ -70,22 +70,22 @@ export const load: PageServerLoad = async ({locals}) => {
             return
         }
 
-        const categoryNumber = categoryExpanses.find(categoryNumber => categoryNumber.category.id === payment.category?.id)
+        const categoryNumber = categoryExpenses.find(categoryNumber => categoryNumber.category.id === payment.category?.id)
         if (categoryNumber) {
             categoryNumber.value += Number(payment.amount)
         } else {
-            categoryExpanses.push({category: payment.category, value: Number(payment.amount)})
+            categoryExpenses.push({category: payment.category, value: Number(payment.amount)})
         }
     })
-    categoryExpanses.sort((a, b) => b.value - a.value)
+    categoryExpenses.sort((a, b) => b.value - a.value)
 
-    categoryExpanses.forEach(categoryNumber => {
+    categoryExpenses.forEach(categoryNumber => {
         categoryPercentages.push({
             category: categoryNumber.category,
             value: Number((Number(categoryNumber.value) / Number(expenses) * 100).toFixed(2)),
         })
     })
-    if (other.value > 0) categoryExpanses.push(other)
+    if (other.value > 0) categoryExpenses.push(other)
 
     categoryPercentages = categoryPercentages.map(categoryNumber => {
         if (categoryNumber.value < 5) {
@@ -120,7 +120,7 @@ export const load: PageServerLoad = async ({locals}) => {
             style: "currency",
             currency: "EUR",
         }).format(Number(balanceDevelopment) / 100),
-        categoryExpanses: categoryExpanses.map(categoryNumber => ({
+        categoryExpenses: categoryExpenses.map(categoryNumber => ({
             category: categoryNumber.category,
             value: new Intl.NumberFormat("de-DE", {
                 style: "currency",
