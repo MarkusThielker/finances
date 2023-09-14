@@ -95,14 +95,11 @@ export const load: PageServerLoad = async ({locals}) => {
         return categoryNumber
     }).filter(categoryNumber => categoryNumber !== null) as CategoryNumber[]
 
-    console.log(categoryPercentages)
-    console.log(other.value)
-
+    other.value = Number(((Number(other.value) * 100) / (Number(expenses) * 100)).toFixed(2))
     categoryPercentages.push(other)
 
     const balanceDevelopment = income - expenses
-    const scopes = Object.values(ScopeType).
-        map(scopeType => scopeType.toString())
+    const scopes = Object.values(ScopeType).map(scopeType => scopeType.toString())
 
     return {
         user: user,

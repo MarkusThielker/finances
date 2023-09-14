@@ -2,7 +2,7 @@
 
     import { fade, fly } from "svelte/transition"
     import { enhance } from "$app/forms"
-
+    
     /**@type {import("./$types").PageData}*/
     export let data
 
@@ -84,5 +84,39 @@
                 {data.balanceDevelopment}
             </div>
         </dd>
+    </div>
+</dl>
+
+<dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 dark:divide-gray-700 overflow-hidden rounded-lg border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 md:grid-cols-2 md:divide-x md:divide-y-0">
+    <div class="px-4 py-5 sm:p-6">
+        <dt class="text-base font-normal">Expenses<span class="ml-2 text-gray-500 text-xs">by category (%)</span></dt>
+        {#each data.categoryPercentages as item}
+            <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center">
+                    <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
+                    <span class="text-sm text-gray-900 dark:text-white">{item.category.name}</span>
+                </div>
+                <span class="text-sm text-gray-900 dark:text-white">{item.value}%</span>
+            </div>
+            <div class="w-full h-1 bg-gray-200 rounded-full mt-2">
+                <div class="w-{item.value} h-1 bg-orange-500 rounded-full"></div>
+            </div>
+        {/each}
+    </div>
+
+    <div class="px-4 py-5 sm:p-6">
+        <dt class="text-base font-normal">Expenses<span class="ml-2 text-gray-500 text-xs">by category (€)</span></dt>
+        {#each data.categoryExpenses as item}
+            <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center">
+                    <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
+                    <span class="text-sm text-gray-900 dark:text-white">{item.category.name}</span>
+                </div>
+                <span class="text-sm text-gray-900 dark:text-white">{item.value}</span>
+            </div>
+            <div class="w-full h-1 bg-gray-200 rounded-full mt-2">
+                <div class="w-{item.value} h-1 bg-orange-500 rounded-full"></div>
+            </div>
+        {/each}
     </div>
 </dl>
