@@ -93,13 +93,10 @@
         {#each data.categoryPercentages as item}
             <div class="flex items-center justify-between mt-4">
                 <div class="flex items-center">
-                    <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
+                    <div class="w-2 h-2 rounded-full mr-2" style="background-color: {item.category.color};"></div>
                     <span class="text-sm text-gray-900 dark:text-white">{item.category.name}</span>
                 </div>
                 <span class="text-sm text-gray-900 dark:text-white">{item.value}%</span>
-            </div>
-            <div class="w-full h-1 bg-gray-200 rounded-full mt-2">
-                <div class="w-{item.value} h-1 bg-orange-500 rounded-full"></div>
             </div>
         {/each}
     </div>
@@ -109,13 +106,10 @@
         {#each data.categoryExpenses as item}
             <div class="flex items-center justify-between mt-4">
                 <div class="flex items-center">
-                    <div class="w-2 h-2 bg-orange-500 rounded-full mr-2"></div>
+                    <div class="w-2 h-2 rounded-full mr-2" style="background-color: {item.category.color};"></div>
                     <span class="text-sm text-gray-900 dark:text-white">{item.category.name}</span>
                 </div>
                 <span class="text-sm text-gray-900 dark:text-white">{item.value}</span>
-            </div>
-            <div class="w-full h-1 bg-gray-200 rounded-full mt-2">
-                <div class="w-{item.value} h-1 bg-orange-500 rounded-full"></div>
             </div>
         {/each}
     </div>
