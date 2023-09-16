@@ -4,7 +4,11 @@ import { LOGIN_URL } from "$lib/constants"
 import { prismaClient } from "$lib/server/prisma"
 import { EntityType, type Category } from "@prisma/client"
 import { Scope, ScopeType } from "$lib/server/scope"
-import { type } from "os"
+
+type CategoryNumber = {
+    category: Category,
+    value: bigint,
+}
 
 export const load: PageServerLoad = async ({locals}) => {
 
@@ -14,6 +18,7 @@ export const load: PageServerLoad = async ({locals}) => {
     const preference = await prismaClient.preference.findFirst({where: {userId: user.userId, key: "scope"}})
     const scope = Scope.of(preference?.value as ScopeType ?? ScopeType.ThisMonth)
 
+    // get all payments in the current scope
     const payments = await prismaClient.payment.findMany({
         where: {
             userId: user.userId,
@@ -29,74 +34,55 @@ export const load: PageServerLoad = async ({locals}) => {
         },
     })
 
-    let income = BigInt(0)
-    let expenses = BigInt(0)
+    let income = 0n
+    let expenses = 0n
 
+    // sum up income
     payments.filter(payment =>
         payment.payor.type === EntityType.Entity &&
         payment.payee.type === EntityType.Account,
     ).forEach(payment => income += payment.amount)
 
+    // sum up expenses
     payments.filter(payment =>
         payment.payor.type === EntityType.Account &&
         payment.payee.type === EntityType.Entity,
     ).forEach(payment => expenses += payment.amount)
 
-    type CategoryNumber = {
-        category: Category,
-        value: number,
-    }
-
+    // init helper variables
     const categoryExpenses: CategoryNumber[] = []
-    let categoryPercentages: CategoryNumber[] = []
     const other: CategoryNumber = { 
         category: {
             id: 0,
             userId: "",
             name: "Other",
-            color: "#444444",
+            color: "#888888",
             createdAt: new Date(),
             updatedAt: new Date()
         },
-        value: 0
+        value: 0n
     }
+
+    // sum up expenses per category
     payments.filter(payment =>
         payment.payor.type === EntityType.Account &&
         payment.payee.type === EntityType.Entity,
     ).forEach(payment => {
 
         if (!payment.category) {
-            other.value += Number(payment.amount)
+            other.value += payment.amount
             return
         }
 
         const categoryNumber = categoryExpenses.find(categoryNumber => categoryNumber.category.id === payment.category?.id)
         if (categoryNumber) {
-            categoryNumber.value += Number(payment.amount)
+            categoryNumber.value += payment.amount
         } else {
-            categoryExpenses.push({category: payment.category, value: Number(payment.amount)})
+            categoryExpenses.push({category: payment.category, value: payment.amount})
         }
     })
-    categoryExpenses.sort((a, b) => b.value - a.value)
-
-    categoryExpenses.forEach(categoryNumber => {
-        categoryPercentages.push({
-            category: categoryNumber.category,
-            value: Number((Number(categoryNumber.value) / Number(expenses) * 100).toFixed(2)),
-        })
-    })
-    if (other.value > 0) categoryExpenses.push(other)
-
-    categoryPercentages = categoryPercentages.map(categoryNumber => {
-        if (categoryNumber.value < 5) {
-            other.value += categoryNumber.value
-            return null
-        }
-        return categoryNumber
-    }).filter(categoryNumber => categoryNumber !== null) as CategoryNumber[]
-
-    other.value = Number(((Number(other.value) * 100) / (Number(expenses) * 100)).toFixed(2))
-    categoryPercentages.push(other)
+    categoryExpenses.sort((a, b) => Number(b.value - a.value))
+    if (other.value > 0) { categoryExpenses.push(other) }
 
     const balanceDevelopment = income - expenses
     const scopes = Object.values(ScopeType).map(scopeType => scopeType.toString())
@@ -124,7 +110,10 @@ export const load: PageServerLoad = async ({locals}) => {
                 currency: "EUR",
             }).format(Number(categoryNumber.value) / 100),
         })),
-        categoryPercentages: categoryPercentages
+        categoryPercentages: categoryExpenses.map(categoryNumber => ({
+            category: categoryNumber.category,
+            value: amountToPercent(categoryNumber.value, expenses),
+        })),
     }
 }
 
@@ -155,4 +144,8 @@ export const actions: Actions = {
             })
         }
     },
+}
+
+function amountToPercent(amount: bigint, total: bigint): string {
+    return (Number(amount)/Number(total)*100).toFixed(2)
 }
