@@ -1,5 +1,7 @@
 FROM node:20-slim as build
 
+RUN apt update -y && apt install openssl -y
+
 WORKDIR /app
 
 COPY package.json ./
@@ -11,7 +13,6 @@ COPY . .
 COPY prisma/ ./prisma/
 RUN npx prisma generate
 
-RUN apt update -y && apt install openssl -y
 RUN npm run build
 
 EXPOSE 3000

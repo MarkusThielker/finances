@@ -1,10 +1,10 @@
 username=markus
-server=server
+server=server.thielker.xyz
 image=finances-prod
 version=${1:-"1.0.0"}
 
 # build image and export to tar
-docker image build --no-cache -t $image:"$version" .
+docker build --platform linux/amd64 --no-cache -t $image:"$version" .
 docker image save -o finances-prod-"$version".tar finances-prod:"$version"
 gzip finances-prod-"$version".tar
 
