@@ -159,9 +159,13 @@
                     <li class="mt-auto">
                         <p class="text-orange-300">Version {version}</p>
                         <div class="row space-x-2">
-                            <a class="text-orange-300 hover:text-orange-200" href="/changelog">Changelog</a>
+                            <a class="text-orange-300 hover:text-orange-200" 
+                                href="https://github.com/MarkusThielker/finances/releases"
+                                target="_blank">
+                                Changelog
+                            </a>
                             <a class="text-orange-300 hover:text-orange-200"
-                               href="https://github.com/markusthielker/finances">
+                                href="https://github.com/markusthielker/finances">
                                 Source Code
                             </a>
                         </div>

@@ -2,9 +2,9 @@
 
     import { fade, fly } from "svelte/transition"
     import { enhance } from "$app/forms"
+    import type { PageData } from "./$types";
     
-    /**@type {import("./$types").PageData}*/
-    export let data
+    export let data: PageData
 
     let scopeOptionsVisible = false
 
