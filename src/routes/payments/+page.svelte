@@ -66,6 +66,11 @@
 </script>
 
 
+<svelte:head>
+    <title>Payments | Finances</title>
+</svelte:head>
+
+
 <div class="sm:flex sm:items-center">
     <div class="sm:flex-auto">
         <h1 class="text-2xl font-semibold leading-6 text-gray-900 dark:text-white">Payments</h1>

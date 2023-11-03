@@ -10,6 +10,12 @@
 
 </script>
 
+
+<svelte:head>
+    <title>Dashboard | Finances</title>
+</svelte:head>
+
+
 <div class="flex justify-end">
     <div class="relative mt-1 w-48">
 
