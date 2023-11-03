@@ -120,3 +120,30 @@
         {/each}
     </div>
 </dl>
+
+
+<dl class="mt-5 grid grid-cols-1 divide-y divide-gray-200 dark:divide-gray-700 overflow-hidden rounded-lg border border-gray-200 dark:border-neutral-700 bg-white dark:bg-neutral-900 md:grid-cols-2 md:divide-x md:divide-y-0">
+    <div class="px-4 py-5 sm:p-6">
+        <dt class="text-base font-normal">Expenses<span class="ml-2 text-gray-500 text-xs">by entity (%)</span></dt>
+        {#each data.entityPercentages as item}
+            <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-900 dark:text-white">{item.entity.name}</span>
+                </div>
+                <span class="text-sm text-gray-900 dark:text-white">{item.value}%</span>
+            </div>
+        {/each}
+    </div>
+
+    <div class="px-4 py-5 sm:p-6">
+        <dt class="text-base font-normal">Expenses<span class="ml-2 text-gray-500 text-xs">by entity (€)</span></dt>
+        {#each data.entityExpenses as item}
+            <div class="flex items-center justify-between mt-4">
+                <div class="flex items-center">
+                    <span class="text-sm text-gray-900 dark:text-white">{item.entity.name}</span>
+                </div>
+                <span class="text-sm text-gray-900 dark:text-white">{item.value}</span>
+            </div>
+        {/each}
+    </div>
+</dl>
