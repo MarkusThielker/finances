@@ -2,11 +2,16 @@ import type { Actions, PageServerLoad } from "./$types"
 import { redirect } from "@sveltejs/kit"
 import { LOGIN_URL } from "$lib/constants"
 import { prismaClient } from "$lib/server/prisma"
-import { EntityType, type Category } from "@prisma/client"
+import { EntityType, type Category, type Entity } from "@prisma/client"
 import { Scope, ScopeType } from "$lib/server/scope"
 
 type CategoryNumber = {
     category: Category,
+    value: bigint,
+}
+
+type EntityNumber = {
+    entity: Entity,
     value: bigint,
 }
 
@@ -49,9 +54,14 @@ export const load: PageServerLoad = async ({locals}) => {
         payment.payee.type === EntityType.Entity,
     ).forEach(payment => expenses += payment.amount)
 
-    // init helper variables
+
+    // ############################
+    // Expenses by category
+    // ############################
+
+    // init helper variables (category)
     const categoryExpenses: CategoryNumber[] = []
-    const other: CategoryNumber = { 
+    const otherCategory: CategoryNumber = { 
         category: {
             id: 0,
             userId: "",
@@ -70,7 +80,7 @@ export const load: PageServerLoad = async ({locals}) => {
     ).forEach(payment => {
 
         if (!payment.category) {
-            other.value += payment.amount
+            otherCategory.value += payment.amount
             return
         }
 
@@ -82,7 +92,50 @@ export const load: PageServerLoad = async ({locals}) => {
         }
     })
     categoryExpenses.sort((a, b) => Number(b.value - a.value))
-    if (other.value > 0) { categoryExpenses.push(other) }
+    if (otherCategory.value > 0) { categoryExpenses.push(otherCategory) }
+
+
+    // ############################
+    // Expenses by entity
+    // ############################
+
+    // init helper variables (entity)
+    const entityExpenses: EntityNumber[] = []
+    const otherEntity: EntityNumber = { 
+        entity: {
+            id: 0,
+            userId: "",
+            name: "Other",
+            type: EntityType.Entity,
+            createdAt: new Date(),
+            updatedAt: new Date()
+        },
+        value: 0n
+    }
+
+    // sum up expenses per category
+    payments.filter(payment =>
+        payment.payor.type === EntityType.Account &&
+        payment.payee.type === EntityType.Entity,
+    ).forEach(payment => {
+
+        // if (!payment.payee) {
+        //     other.value += payment.amount
+        //     return
+        // }
+
+        const entityNumber = entityExpenses.find(entityNumber => entityNumber.entity.id === payment.payee?.id)
+        if (entityNumber) {
+            entityNumber.value += payment.amount
+        } else {
+            entityExpenses.push({entity: payment.payee, value: payment.amount})
+        }
+    })
+    entityExpenses.sort((a, b) => Number(b.value - a.value))
+    if (otherEntity.value > 0) { entityExpenses.push(otherEntity) }
+
+    // ############################
+
 
     const balanceDevelopment = income - expenses
     const scopes = Object.values(ScopeType).map(scopeType => scopeType.toString())
@@ -113,6 +166,17 @@ export const load: PageServerLoad = async ({locals}) => {
         categoryPercentages: categoryExpenses.map(categoryNumber => ({
             category: categoryNumber.category,
             value: amountToPercent(categoryNumber.value, expenses),
+        })),
+        entityExpenses: entityExpenses.map(entityNumber => ({
+            entity: entityNumber.entity,
+            value: new Intl.NumberFormat("de-DE", {
+                style: "currency",
+                currency: "EUR",
+            }).format(Number(entityNumber.value) / 100),
+        })),
+        entityPercentages: entityExpenses.map(entityNumber => ({
+            entity: entityNumber.entity,
+            value: amountToPercent(entityNumber.value, expenses),
         })),
     }
 }
