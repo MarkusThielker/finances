@@ -17,7 +17,12 @@
     let color: string
     let colorInput: HTMLInputElement
 
+    let categoryCreateForm: HTMLFormElement
+    let isCategoryCreateFormValid = false
+
     function openDialog(category?: Category) {
+
+        isCategoryCreateFormValid = false
 
         if (category) {
             categoryId = category.id
@@ -123,6 +128,8 @@
     <div class="fixed inset-0 z-10 overflow-y-auto" transition:fade={{duration: 100}}>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <form method="POST" action="{ isEdit ? '?/update' : '?/create'}"
+                  bind:this={categoryCreateForm}
+                  on:change={() => isCategoryCreateFormValid = categoryCreateForm.checkValidity()}
                   class="relative transform overflow-hidden rounded-lg bg-white dark:bg-neutral-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-3xl sm:p-6">
 
                 <h1 class="text-2xl font-semibold leading-6 mb-4">{ isEdit
@@ -160,6 +167,7 @@
                     </button>
                     <button type="submit"
                             class="btn-primary"
+                            disabled={!isCategoryCreateFormValid}
                             on:click={() => dialogVisible = !dialogVisible}>{ isEdit ? "Update" : "Create"}
                     </button>
                 </div>
