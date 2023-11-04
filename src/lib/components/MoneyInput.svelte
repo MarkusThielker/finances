@@ -152,7 +152,6 @@
             {disabled}
             inputmode="numeric"
             name={`formatted-${name}`}
-            on:blur={setFormattedValue}
             on:keydown={handleKeyDown}
             on:keyup={setUnformattedValue}
             placeholder={formattedPlaceholder}
