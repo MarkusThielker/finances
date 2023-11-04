@@ -1,6 +1,16 @@
 {
     "name": "finances",
+    "description": "A finances application to keep track of personal spendings",
+    "homepage": "https://github.com/MarkusThielker/finances",
     "version": "1.0.0",
+    "license": "MIT",
+    "author": {
+        "name": "Markus Thielker"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/MarkusThielker/finances.git"
+    },
     "private": true,
     "scripts": {
         "dev": "vite dev --port 3000",
