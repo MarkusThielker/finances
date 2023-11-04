@@ -142,18 +142,18 @@
 
                     <div class="flex flex-row space-x-2">
 
-                        <div on:click={() => colorInput.click()}
-                             class="shape-rounded aspect-square w-10 cursor-pointer border border-black"
+                        <div on:click={() => colorInput.click()} on:keydown
+                             class="shape-rounded aspect-square w-10 cursor-pointer border border-black items-bottom"
                              style="background-color: {color}">
-                        </div>
 
-                        <input id="color"
-                               name="color"
-                               type="color"
-                               class="hidden"
-                               bind:value={color}
-                               bind:this={colorInput}
-                               required>
+                             <input id="color"
+                             name="color"
+                             type="color"
+                             class="opacity-0 w-10 h-8"
+                             bind:value={color}
+                             bind:this={colorInput}
+                             required>
+                        </div>
 
                         <input id="name" name="name" class="input-text w-full" bind:value={name} required>
 
