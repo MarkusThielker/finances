@@ -1,11 +1,12 @@
 <script lang="ts">
 
     import { fade } from "svelte/transition"
-    import { Entity } from "@prisma/client"
+    import type { Entity } from "@prisma/client"
     import Dropdown from "$lib/components/Dropdown.svelte"
+    import type { PageData } from "./$types";
 
     /**@type {import("./$types").PageData}*/
-    export let data
+    export let data: PageData
 
     let dialogVisible = false
     let isEdit = false
@@ -132,7 +133,7 @@
                         <input id="name" name="name" class="input-text" bind:value={name} required>
                     </div>
 
-                    <Dropdown name="type" label="Type" bind:value={type} options={types}/>
+                    <Dropdown name="type" label="Type" bind:value={type} options={types} required/>
 
                 </div>
                 <div class="mt-5 sm:mt-6 grid grid-flow-row-dense grid-cols-2 gap-3">

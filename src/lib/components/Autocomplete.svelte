@@ -5,9 +5,10 @@
     export let name: string
     export let label: string
     export let value: number | null
-    export let next: HTMLInputElement | null
+    export let next: HTMLElement | null = null
     export let options: { id: number, name: string }[] = []
-    export let inputRef: HTMLInputElement
+    export let inputRef: HTMLElement
+    export let required: boolean = false
 
     let inputValue = ""
     let filteredOptions: { id: number, name: string }[] = []
@@ -58,6 +59,7 @@
             bind:this="{inputRef}"
             bind:value="{inputValue}"
             on:input="{handleInput}"
+            {required}
     />
     {#if showOptions}
         <div class="absolute z-10 mt-1 bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-neutral-700 w-full">

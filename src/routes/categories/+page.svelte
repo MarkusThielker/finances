@@ -1,10 +1,11 @@
 <script lang="ts">
 
     import { fade } from "svelte/transition"
-    import { Category } from "@prisma/client"
+    import type { Category } from "@prisma/client"
+    import type { PageData } from "./$types";
 
     /**@type {import("./$types").PageData}*/
-    export let data
+    export let data: PageData
 
     let dialogVisible = false
     let isEdit = false
