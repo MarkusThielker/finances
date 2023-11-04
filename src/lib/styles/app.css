@@ -3,29 +3,75 @@
 @tailwind utilities;
 
 body {
-    @apply bg-white dark:bg-neutral-900 text-black dark:text-white;
+    @apply
+        bg-white
+        dark:bg-neutral-900
+        text-black
+        dark:text-white;
 }
 
 .shape-rounded {
-    @apply rounded-full;
+    @apply
+        rounded-full;
 }
 
 .btn-primary {
-    @apply bg-orange-500 hover:bg-orange-600 px-4 py-1 text-white font-semibold shape-rounded cursor-pointer;
+    @apply
+        bg-orange-500
+        hover:bg-orange-600
+        disabled:opacity-50
+        px-4
+        py-1
+        text-white
+        font-semibold
+        shape-rounded
+        cursor-pointer;
 }
 
 .btn-text-primary {
-    @apply text-center text-orange-500 font-semibold cursor-pointer;
+    @apply
+        disabled:opacity-50
+        text-center
+        text-orange-500
+        font-semibold
+        cursor-pointer;
 }
 
 .card {
-    @apply p-8 bg-white dark:bg-neutral-900 border border-gray-200 dark:border-neutral-700 rounded-3xl;
+    @apply
+        p-8
+        bg-white
+        dark:bg-neutral-900
+        border
+        border-gray-200
+        dark:border-neutral-700
+        rounded-3xl;
 }
 
 .input-text {
-    @apply shape-rounded border border-gray-200 dark:border-neutral-700  px-2 py-1 bg-white dark:bg-neutral-800/25 text-black dark:text-white;
+    @apply
+        shape-rounded
+        border
+        border-gray-200
+        dark:border-neutral-700
+        px-2
+        py-1
+        bg-white
+        dark:bg-neutral-800/25
+        text-black
+        dark:text-white;
 }
 
 .input-text-area {
-    @apply rounded-xl border border-gray-200 dark:border-neutral-700  px-2 py-1 bg-white dark:bg-neutral-800/25 text-black dark:text-white;
+    @apply
+        rounded-xl
+        border
+        border-gray-200
+        dark:border-neutral-700
+        px-2
+        py-1
+        bg-white
+        dark:bg-neutral-800/25
+        text-black
+        dark:text-white;
 }

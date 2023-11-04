@@ -1,11 +1,12 @@
 <script lang="ts">
 
     import { fade } from "svelte/transition"
-    import { Entity } from "@prisma/client"
+    import type { Entity } from "@prisma/client"
     import Dropdown from "$lib/components/Dropdown.svelte"
+    import type { PageData } from "./$types";
 
     /**@type {import("./$types").PageData}*/
-    export let data
+    export let data: PageData
 
     let dialogVisible = false
     let isEdit = false
@@ -16,7 +17,12 @@
     let type: string
     const types = ["Entity", "Account"]
 
+    let entityCreateForm: HTMLFormElement
+    let isEntityCreateFormValid = false
+
     function openDialog(entity?: Entity) {
+
+        isEntityCreateFormValid = false
 
         if (entity) {
             entityId = entity.id
@@ -117,6 +123,8 @@
     <div class="fixed inset-0 z-10 overflow-y-auto" transition:fade={{duration: 100}}>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
             <form method="POST" action="{ isEdit ? '?/update' : '?/create'}"
+                  bind:this={entityCreateForm} 
+                  on:change={() => isEntityCreateFormValid = entityCreateForm.checkValidity()}
                   class="relative transform overflow-hidden rounded-lg bg-white dark:bg-neutral-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-3xl sm:p-6">
 
                 <h1 class="text-2xl font-semibold leading-6 mb-4">{ isEdit
@@ -132,7 +140,7 @@
                         <input id="name" name="name" class="input-text" bind:value={name} required>
                     </div>
 
-                    <Dropdown name="type" label="Type" bind:value={type} options={types}/>
+                    <Dropdown name="type" label="Type" bind:value={type} options={types} required/>
 
                 </div>
                 <div class="mt-5 sm:mt-6 grid grid-flow-row-dense grid-cols-2 gap-3">
@@ -142,6 +150,7 @@
                     </button>
                     <button type="submit"
                             class="btn-primary"
+                            disabled={!isEntityCreateFormValid}
                             on:click={() => dialogVisible = !dialogVisible}>{ isEdit ? "Update" : "Create"}
                     </button>
                 </div>

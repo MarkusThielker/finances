@@ -2,12 +2,13 @@
 
     export let name: string
     export let label: string
-    export let value: number | null
+    export let value: string | null
     export let options: any[] = []
+    export let required: boolean = false
 
     let showOptions = false
 
-    function selectOption(option) {
+    function selectOption(option: string) {
         value = option
         showOptions = false
     }
@@ -30,5 +31,5 @@
             {/each}
         </div>
     {/if}
-    <input bind:value={value} class="hidden" id={name} name={name} type="text"/>
+    <input bind:value={value} class="hidden" id={name} name={name} type="text" {required}/>
 </div>

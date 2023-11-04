@@ -4,9 +4,10 @@
     import MoneyInput from "$lib/components/MoneyInput.svelte"
     import type { Payment } from "@prisma/client"
     import Autocomplete from "$lib/components/Autocomplete.svelte"
+    import type { PageData } from "./$types";
 
     /**@type {import("./$types").PageData}*/
-    export let data
+    export let data: PageData
 
     let dialogVisible = false
     let isEdit = false
@@ -21,16 +22,22 @@
 
     let payors = data?.entities
     let payor = payors[0]?.id
+    let payorRef: HTMLElement
 
     let payees = data?.entities
     let payee = payees[1]?.id
-    let payeeRef
+    let payeeRef: HTMLElement
 
     let categories = data?.categories
     let category = categories[0]?.id
-    let categoryRef
+    let categoryRef: HTMLElement
+
+    let paymentCreateForm: HTMLFormElement
+    let isPaymentCreateFormValid = false
 
     function openDialog(payment?: Payment) {
+
+        isPaymentCreateFormValid = false
 
         if (payment) {
             paymentId = payment.id
@@ -57,7 +64,7 @@
         dialogVisible = true
     }
 
-    function getMonthName(monthNumber) {
+    function getMonthName(monthNumber: number) {
         const date = new Date()
         date.setMonth(monthNumber)
         return date.toLocaleString("en-US", {month: "long"})
@@ -176,7 +183,9 @@
 
     <div class="fixed inset-0 z-10 overflow-y-auto" transition:fade={{duration: 100}}>
         <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
-            <form method="POST" action="{ isEdit ? '?/update' : '?/create'}"
+            <form method="POST" action="{ isEdit ? '?/update' : '?/create'}" 
+                  bind:this={paymentCreateForm}
+                  on:change={() => isPaymentCreateFormValid = paymentCreateForm.checkValidity()}
                   class="relative transform overflow-hidden rounded-lg bg-white dark:bg-neutral-900 px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 w-full sm:max-w-3xl sm:p-6">
 
                 <h1 class="text-2xl font-semibold leading-6 mb-4">{ isEdit
@@ -187,7 +196,7 @@
 
                     <input type="hidden" name="id" value={paymentId}/>
 
-                    <MoneyInput bind:value={amount} name="amount" required="true"/>
+                    <MoneyInput bind:value={amount} name="amount" required/>
 
                     <div>
                         <label for="date">Date</label>
@@ -195,23 +204,45 @@
                                bind:value={dateString}
                                on:change={(event) => {
                                    event.preventDefault()
-                                   date = new Date(event.target.value)
+                                   date = new Date (event.target?.value)
                                    dateString = date.toISOString().split("T")[0]
                                }}
                                required
                         />
                     </div>
 
-                    <Autocomplete name="payor" label="Payor" next={payeeRef} bind:value={payor} options={payors}/>
+                    <Autocomplete 
+                        name="payor" 
+                        label="Payor" 
+                        bind:inputRef="{payorRef}" 
+                        next={payeeRef} 
+                        bind:value={payor} 
+                        options={payors} 
+                        required/>
 
-                    <Autocomplete name="payee" label="Payee" bind:inputRef="{payeeRef}" next={categoryRef} bind:value={payee} options={payees}/>
+                    <Autocomplete 
+                        name="payee" 
+                        label="Payee" 
+                        bind:inputRef="{payeeRef}" 
+                        next={categoryRef} 
+                        bind:value={payee} 
+                        options={payees} 
+                        required/>
 
-                    <Autocomplete name="category" label="Category" bind:inputRef="{categoryRef}" bind:value={category} options={categories}/>
+                    <Autocomplete 
+                        name="category" 
+                        label="Category" 
+                        bind:inputRef="{categoryRef}" 
+                        bind:value={category}
+                        options={categories}/>
 
                     <div class="flex flex-col w-full sm:col-span-2">
                         <label for="note">Note</label>
-                        <textarea id="note" name="note" bind:value={note}
-                                  class="input-text-area"></textarea>
+                        <textarea 
+                            id="note" 
+                            name="note" 
+                            bind:value={note}
+                            class="input-text-area"/>
                     </div>
 
                 </div>
@@ -223,6 +254,7 @@
                     </button>
                     <button type="submit"
                             class="btn-primary"
+                            disabled={!isPaymentCreateFormValid}
                             on:click={() => dialogVisible = !dialogVisible}>{ isEdit ? "Update" : "Create"}
                     </button>
                 </div>
