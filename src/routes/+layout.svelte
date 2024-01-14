@@ -97,8 +97,8 @@
                                  alt="Logo of Markus Thielker: a M and a T between curly braces.">
                         </a>
                         <nav class="flex flex-1 flex-col">
-                            <ul role="list" class="flex flex-1 flex-col gap-y-7">
-                                <li>
+                            <div class="flex flex-1 flex-col">
+                                <div>
                                     <ul role="list" class="-mx-2 space-y-1">
                                         {#each menuItems as item}
                                             <li>
@@ -110,8 +110,15 @@
                                             </li>
                                         {/each}
                                     </ul>
-                                </li>
-                                <li class="mt-auto">
+                                </div>
+                                <div class="mt-auto">
+                                    <a href="/account" on:click={() => isSidebarOpen = false}
+                                       class="-mx-2 mb-2 text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold { $page.url.pathname === '/account' ? 'bg-orange-600' : 'hover:text-white hover:bg-orange-600' }">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                        </svg>
+                                        Account
+                                    </a>
                                     <p class="text-orange-300">Version {version}</p>
                                     <div class="row space-x-2">
                                         <a href="/changelog"
@@ -125,8 +132,8 @@
                                             Source Code
                                         </a>
                                     </div>
-                                </li>
-                            </ul>
+                                </div>
+                            </div>
                         </nav>
                     </div>
                 </div>
@@ -142,8 +149,8 @@
                      src="/logo_white.png">
             </a>
             <nav class="flex flex-1 flex-col">
-                <ul class="flex flex-1 flex-col gap-y-7" role="list">
-                    <li>
+                <div class="flex flex-1 flex-col">
+                    <div>
                         <ul class="-mx-2 space-y-1" role="list">
                             {#each menuItems as item}
                                 <li>
@@ -155,8 +162,15 @@
                                 </li>
                             {/each}
                         </ul>
-                    </li>
-                    <li class="mt-auto">
+                    </div>
+                    <div class="mt-auto">
+                        <a href="/account"
+                           class="-mx-2 mb-2 text-white group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold { $page.url.pathname === '/account' ? 'bg-orange-600' : 'hover:text-white hover:bg-orange-600' }">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                            </svg>
+                            Account
+                        </a>
                         <p class="text-orange-300">Version {version}</p>
                         <div class="row space-x-2">
                             <a class="text-orange-300 hover:text-orange-200" 
@@ -169,8 +183,8 @@
                                 Source Code
                             </a>
                         </div>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </nav>
         </div>
     </div>
@@ -193,9 +207,7 @@
 
             <div class="flex flex-1 gap-x-4 self-stretch justify-end lg:gap-x-6">
                 <div class="flex items-center gap-x-4 lg:gap-x-6">
-
-                    <button aria-checked="false"
-                            class="{isDarkMode ? 'bg-orange-500' : 'bg-gray-200'} bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out"
+                    <button class="{isDarkMode ? 'bg-orange-500' : 'bg-gray-200'} bg-gray-200 relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out"
                             on:click={() => switchDarkMode()}
                             type="button"
                     >
@@ -224,19 +236,6 @@
 
                       </span>
                     </button>
-
-                    <!-- Separator -->
-                    <div aria-hidden="true" class="h-6 w-px bg-gray-900/10"></div>
-
-                    <!-- Profile dropdown -->
-                    <div class="relative space-x-4">
-                        {#if data.user}
-                            <a href="/account">Account</a>
-                        {:else}
-                            <a href={LOGIN_URL} class="btn-text-primary">Login</a>
-                            <a href={SIGNUP_URL} class="btn-primary">Create account</a>
-                        {/if}
-                    </div>
                 </div>
             </div>
         </div>
