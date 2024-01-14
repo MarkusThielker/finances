@@ -2,6 +2,7 @@
 
     import { enhance } from "$app/forms"
     import type { PageData } from "./$types"
+    import { dev } from "$app/environment";
 
     export let data: PageData
 
@@ -32,9 +33,11 @@
 
         <div class="space-y-2">
 
-            <form action="?/createSampleDate" class="flex flex-col" method="POST" use:enhance>
-                <input class="btn-primary" type="submit" value="Create Sample Data"/>
-            </form>
+            {#if dev}
+                <form action="?/createSampleDate" class="flex flex-col" method="POST" use:enhance>
+                    <input class="btn-primary" type="submit" value="Create Sample Data"/>
+                </form>
+            {/if}
 
             <form action="?/logout" class="flex flex-col" method="POST" use:enhance>
                 <input class="btn-primary" type="submit" value="Logout"/>
