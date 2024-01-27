@@ -50,17 +50,39 @@
 
 <div class="relative">
     <label class="block" for="{name}-text">{label}</label>
-    <input
-            class="input-text w-full"
-            id="{name}-text"
-            name="{name}-text"
-            placeholder={label}
-            type="text"
-            bind:this="{inputRef}"
-            bind:value="{inputValue}"
-            on:input="{handleInput}"
-            {required}
-    />
+    <div class="flex relative">
+        <input
+                class="input-text w-full"
+                id="{name}-text"
+                name="{name}-text"
+                placeholder={label}
+                type="text"
+                bind:this="{inputRef}"
+                bind:value="{inputValue}"
+                on:input="{handleInput}"
+                {required}
+        />
+        {#if inputValue.length > 0}
+            <button
+                    class="absolute end-2 top-2 z-10"
+                    on:click={() => {
+                        value = null
+                        inputValue = ""
+                        showOptions = false
+                        inputRef.focus()
+                    }}
+            >
+                <svg xmlns="http://www.w3.org/2000/svg"
+                     fill="none"
+                     viewBox="0 0 24 24"
+                     stroke-width="1.5"
+                     stroke="currentColor"
+                     class="w-5 h-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12"/>
+                </svg>
+            </button>
+        {/if}
+    </div>
     {#if showOptions}
         <div class="absolute z-10 mt-1 bg-white dark:bg-neutral-900 rounded-xl border border-gray-200 dark:border-neutral-700 w-full">
             {#each filteredOptions as option (option.id)}
