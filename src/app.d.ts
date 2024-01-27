@@ -1,19 +1,19 @@
 declare global {
     namespace App {
-        type AuthRequest = import("lucia-auth").AuthRequest
+        type AuthRequest = import("lucia").AuthRequest
 
         interface Locals extends AuthRequest {
         }
     }
 }
 
-declare global {
-    namespace Lucia {
-        type Auth = import("$lib/server/lucia").Auth
-        type UserAttributes = {
-            username: string
-        }
-    }
+declare namespace Lucia {
+    type Auth = import("$lib/server/lucia").Auth;
+    type DatabaseUserAttributes = {
+        username: string,
+    };
+    type DatabaseSessionAttributes = {};
 }
 
+// THIS IS IMPORTANT!
 export {}

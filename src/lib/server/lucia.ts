@@ -1,6 +1,6 @@
-import lucia from "lucia-auth"
-import { sveltekit } from "lucia-auth/middleware"
-import prisma from "@lucia-auth/adapter-prisma"
+import { lucia } from "lucia"
+import { sveltekit } from "lucia/middleware"
+import { prisma } from "@lucia-auth/adapter-prisma"
 import { prismaClient } from "./prisma"
 import { dev } from "$app/environment"
 
@@ -9,10 +9,9 @@ export const auth = lucia({
     // always using 'DEV' if deployed to non-https domain
     env: dev ? "DEV" : "PROD",
     middleware: sveltekit(),
-    transformDatabaseUser: (userData) => {
+    getUserAttributes: (data) => {
         return {
-            userId: userData.id,
-            username: userData.username,
+            username: data.username,
         }
     },
 })

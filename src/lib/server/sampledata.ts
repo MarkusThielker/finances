@@ -6,7 +6,7 @@ export async function createSampleData(
     userId: string,
 ) {
 
-    const user = prismaClient.authUser.findFirst({
+    const user = prismaClient.user.findFirst({
         where: {id: userId},
     })
     if (!user) return
