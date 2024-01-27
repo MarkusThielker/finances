@@ -36,10 +36,10 @@
     },
     "type": "module",
     "dependencies": {
-        "@lucia-auth/adapter-prisma": "^1.0.0",
+        "@lucia-auth/adapter-prisma": "^3.0.2",
         "@prisma/client": "^5.5.2",
         "@tailwindcss/forms": "^0.5.6",
         "dotenv": "^16.3.1",
-        "lucia-auth": "^1.0.0"
+        "lucia": "^2.7.6"
     }
 }
