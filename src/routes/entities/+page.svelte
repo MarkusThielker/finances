@@ -20,6 +20,9 @@
     let entityCreateForm: HTMLFormElement
     let isEntityCreateFormValid = false
 
+    let searchTerm = ""
+    $: filteredEntities = data.entities.filter(entity => entity.name.toLowerCase().includes(searchTerm.toLowerCase()))
+
     function openDialog(entity?: Entity) {
 
         isEntityCreateFormValid = false
@@ -58,6 +61,10 @@
     </div>
 </div>
 
+<div class="sm:flex sm:items-center">
+    <input class="input-text w-full" placeholder="Search entity" bind:value={searchTerm}>
+</div>
+
 <div class="flow-root">
     <div class="-mx-4 -my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
         <div class="inline-block min-w-full py-2 align-middle sm:px-6 lg:px-8">
@@ -76,7 +83,7 @@
                     </thead>
                     <tbody class="divide-y divide-gray-200 bg-white">
 
-                    {#each data.entities as entity, i}
+                    {#each filteredEntities as entity, i}
                         <tr>
                             <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm text-gray-900 sm:pl-6">{entity.name}</td>
                             <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{entity.type}</td>
