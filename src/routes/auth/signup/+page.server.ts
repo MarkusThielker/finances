@@ -45,7 +45,7 @@ export const actions: Actions = {
         try {
 
             const user = await auth.createUser({
-                primaryKey: {
+                key: {
                     providerId: "username",
                     providerUserId: username,
                     password,
@@ -55,7 +55,10 @@ export const actions: Actions = {
                 },
             })
 
-            const session = await auth.createSession(user.userId)
+            const session = await auth.createSession({
+                userId: user.userId,
+                attributes: {}
+            })
             locals.setSession(session)
 
         } catch {

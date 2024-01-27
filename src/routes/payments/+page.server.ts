@@ -6,8 +6,9 @@ import type { Payment } from "@prisma/client";
 
 export const load: PageServerLoad = async ({locals}) => {
 
-    const {user} = await locals.validateUser()
-    if (!user) throw redirect(302, LOGIN_URL)
+    const session = await locals.validate()
+    if (!session) throw redirect(302, LOGIN_URL)
+    const user = session.user
 
     let payments = await prismaClient.payment.findMany({
         where: {
@@ -53,7 +54,7 @@ export const load: PageServerLoad = async ({locals}) => {
 export const actions: Actions = {
     create: async ({request, locals}) => {
 
-        const {user} = await locals.validateUser()
+        const {user} = await locals.validate()
         if (!user) throw redirect(302, LOGIN_URL)
 
         try {
@@ -71,7 +72,7 @@ export const actions: Actions = {
     },
     update: async ({request, locals}) => {
 
-        const {user} = await locals.validateUser()
+        const { user } = await locals.validate()
         if (!user) throw redirect(302, LOGIN_URL)
 
         const formData = await request.formData()
@@ -94,7 +95,7 @@ export const actions: Actions = {
     },
     remove: async ({request, locals}) => {
 
-        const {user} = await locals.validateUser()
+        const { user } = await locals.validate()
         if (!user) throw redirect(302, LOGIN_URL)
 
         const formData = await request.formData()
