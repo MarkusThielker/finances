@@ -18,7 +18,7 @@ type EntityNumber = {
 export const load: PageServerLoad = async ({locals}) => {
 
     const session = await locals.validate()
-    if (!session) throw redirect(302, LOGIN_URL)
+    if (!session) redirect(302, LOGIN_URL);
     const user = session.user
 
     const preference = await prismaClient.preference.findFirst({where: {userId: user.userId, key: "scope"}})
@@ -186,7 +186,7 @@ export const actions: Actions = {
     updateScope: async ({request, locals}) => {
 
         const { user } = await locals.validate()
-        if (!user) throw redirect(302, LOGIN_URL)
+        if (!user) redirect(302, LOGIN_URL);
 
         const formData = await request.formData()
         const value = formData.get("scope") as ScopeType

@@ -8,7 +8,7 @@ import { createSampleData } from "$lib/server/sampledata"
 export const load: PageServerLoad = async ({locals}) => {
 
     const session = await locals.validate()
-    if (!session) throw redirect(302, LOGIN_URL)
+    if (!session) redirect(302, LOGIN_URL);
     const user = session.user
 
     const entities = await prismaClient.entity.count({

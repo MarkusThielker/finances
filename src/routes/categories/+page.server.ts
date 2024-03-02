@@ -6,7 +6,7 @@ import { prismaClient } from "$lib/server/prisma"
 export const load: PageServerLoad = async ({locals}) => {
 
     const session = await locals.validate()
-    if (!session) throw redirect(302, LOGIN_URL)
+    if (!session) redirect(302, LOGIN_URL);
     const user = session.user
 
     const categories = await prismaClient.category.findMany({
@@ -25,7 +25,7 @@ export const actions: Actions = {
     create: async ({request, locals}) => {
 
         const {user} = await locals.validate()
-        if (!user) throw redirect(302, LOGIN_URL)
+        if (!user) redirect(302, LOGIN_URL);
 
         try {
             await prismaClient.category.create({
@@ -35,7 +35,7 @@ export const actions: Actions = {
                 },
             })
         } catch (e) {
-            throw error(400, "Invalid category data")
+            error(400, "Invalid category data");
         }
 
         return
@@ -43,7 +43,7 @@ export const actions: Actions = {
     update: async ({request, locals}) => {
 
         const {user} = await locals.validate()
-        if (!user) throw redirect(302, LOGIN_URL)
+        if (!user) redirect(302, LOGIN_URL);
 
         const formData = await request.formData()
 
@@ -66,7 +66,7 @@ export const actions: Actions = {
     remove: async ({request, locals}) => {
 
         const {user} = await locals.validate()
-        if (!user) throw redirect(302, LOGIN_URL)
+        if (!user) redirect(302, LOGIN_URL);
 
         const formData = await request.formData()
 
