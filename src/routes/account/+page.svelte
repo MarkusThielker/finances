@@ -3,6 +3,8 @@
     import { enhance } from "$app/forms"
     import type { PageData } from "./$types"
     import { dev } from "$app/environment";
+    import * as Card from "$lib/components/ui/card"
+    import * as Form from "$lib/components/ui/form"
 
     export let data: PageData
 
@@ -16,35 +18,52 @@
 
 <div class="flex items-center justify-center">
 
-    <div class="card flex flex-col max-w-md w-full space-y-6">
+    <Card.Root class="w-[450px]">
+        <Card.Header>
+            <Card.Title>Welcome back, {data.user.username}!</Card.Title>
+        </Card.Header>
+        <Card.Content class="space-y-2">
+            <div>
+                <p>
+                    <span class="font-semibold">User id:</span>
+                    {data.user.userId}
+                </p>
+                <p>
+                    <span class="font-semibold">Username:</span>
+                    {data.user.username}
+                </p>
+            </div>
 
-        <h1 class="text-xl text-center font-semibold">Welcome back, {data.user.username}!</h1>
-
-        <div>
-            <p>User id: {data.user.userId}</p>
-            <p>Username: {data.user.username}</p>
-        </div>
-
-        <div>
-            <p>Payments: {data.payments}</p>
-            <p>Entities: {data.entities}</p>
-            <p>Categories: {data.categories}</p>
-        </div>
-
-        <div class="space-y-2">
+            <div>
+                <p>
+                    <span class="font-semibold">Payments:</span>
+                    {data.payments}
+                </p>
+                <p>
+                    <span class="font-semibold">Entities:</span>
+                    {data.entities}
+                </p>
+                <p>
+                    <span class="font-semibold">Categories:</span>
+                    {data.categories}
+                </p>
+            </div>
 
             {#if dev}
                 <form action="?/createSampleDate" class="flex flex-col" method="POST" use:enhance>
-                    <input class="btn-primary" type="submit" value="Create Sample Data"/>
+                    <Form.Button class="btn-primary" type="submit">
+                        Create Sample Data
+                    </Form.Button>
                 </form>
             {/if}
 
             <form action="?/logout" class="flex flex-col" method="POST" use:enhance>
-                <input class="btn-primary" type="submit" value="Logout"/>
+                <Form.Button class="btn-primary" type="submit">
+                    Logout
+                </Form.Button>
             </form>
 
-        </div>
+        </Card.Content>
 
-    </div>
-
+    </Card.Root>
 </div>
