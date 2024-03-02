@@ -1,45 +1,23 @@
 import type { Actions, PageServerLoad } from "./$types"
-import { redirect } from "@sveltejs/kit"
+import { fail, redirect } from "@sveltejs/kit"
 import { auth } from "$lib/server/lucia"
+import { superValidate } from "sveltekit-superforms";
+import { zod } from "sveltekit-superforms/adapters";
+import { formSchema } from "../login/schema";
 
 export const load: PageServerLoad = async ({locals}) => {
     const session = await locals.validate()
     if (session) redirect(302, "/account");
-    return {}
-}
+    return {
+        form: await superValidate(zod(formSchema)),
+    }}
 
 export const actions: Actions = {
-    default: async ({request, locals}) => {
+    default: async (event) => {
 
-        const form = await request.formData()
-        const username = form.get("username") as string
-        const password = form.get("password") as string
-
-        // check for empty values
-        if (username.trim().length < 3 || password.length < 8) {
-            return {
-                error: {
-                    username: username.length < 3
-                        ? "Username has to be at least 3 characters long"
-                        : undefined,
-                    password: password.length < 8
-                        ? "Password has to be at least 8 characters long"
-                        : undefined,
-                },
-            }
-        }
-
-        if (username.includes(" ") || password.includes(" ")) {
-            return {
-                error: {
-                    username: username.includes(" ")
-                        ? "Username cannot contain spaces"
-                        : undefined,
-                    password: password.includes(" ")
-                        ? "Password cannot contain spaces"
-                        : undefined,
-                },
-            }
+        const form = await superValidate(event, zod(formSchema));
+        if (!form.valid) {
+            return fail(400, { form });
         }
 
         try {
@@ -47,11 +25,11 @@ export const actions: Actions = {
             const user = await auth.createUser({
                 key: {
                     providerId: "username",
-                    providerUserId: username,
-                    password,
+                    providerUserId: form.data.username,
+                    password: form.data.password,
                 },
                 attributes: {
-                    username: username,
+                    username: form.data.username,
                 },
             })
 
@@ -59,7 +37,7 @@ export const actions: Actions = {
                 userId: user.userId,
                 attributes: {}
             })
-            locals.setSession(session)
+            event.locals.setSession(session)
 
         } catch {
             return {

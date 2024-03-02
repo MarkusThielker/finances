@@ -1,9 +1,22 @@
 <script lang="ts">
 
-    import { enhance } from "$app/forms"
     import { LOGIN_URL } from "$lib/constants"
 
-    export let form
+    import * as Form from "$lib/components/ui/form"
+    import { Input } from "$lib/components/ui/input"
+    import { type Infer, superForm, type SuperValidated } from "sveltekit-superforms"
+    import { formSchema, type FormSchema } from "./schema"
+    import { zodClient } from "sveltekit-superforms/adapters"
+    import * as Card from "$lib/components/ui/card"
+
+    export let data: SuperValidated<Infer<FormSchema>>
+
+    const form = superForm(data, {
+        validators: zodClient(formSchema),
+        dataType: "json",
+    })
+
+    const { form: formData, enhance } = form
 
 </script>
 
@@ -15,33 +28,35 @@
 
 <div class="flex items-center justify-center">
 
-    <div class="card flex flex-col max-w-md w-full space-y-4 ">
+    <Card.Root class="w-[450px]">
+        <Card.Header>
+            <Card.Title>Create your account</Card.Title>
+        </Card.Header>
+        <Card.Content>
+            <form class="flex flex-col space-y-2" method="POST" use:enhance>
 
-        <h1 class="text-xl text-center font-semibold">Create your account</h1>
+                <Form.Field {form} name="username">
+                    <Form.Control let:attrs>
+                        <Form.Label>Username</Form.Label>
+                        <Input {...attrs} bind:value={$formData.username} />
+                    </Form.Control>
+                    <Form.FieldErrors />
+                </Form.Field>
 
-        <form class="flex flex-col space-y-2" method="POST" use:enhance>
-            <div class="flex flex-col">
-                <label for="username">Username</label>
-                <input class="input-text" id="username" name="username" required/>
-                {#if form?.error?.username}
-                    <div class="text-red-500">{form.error.username}</div>
-                {/if}
-            </div>
-            <div class="flex flex-col">
-                <label for="password">Password</label>
-                <input class="input-text" id="password" name="password" required type="password"/>
-                {#if form?.error?.password}
-                    <div class="text-red-500">{form.error.password}</div>
-                {/if}
-            </div>
+                <Form.Field {form} name="password">
+                    <Form.Control let:attrs>
+                        <Form.Label>Password</Form.Label>
+                        <Input {...attrs} bind:value={$formData.password} />
+                    </Form.Control>
+                    <Form.FieldErrors />
+                </Form.Field>
 
-            {#if form?.error?.general}
-                <div class="bg-red-500/50 shape-rounded text-red-500 text-center">{form.error.general}</div>
-            {/if}
-
-            <input class="btn-primary" type="submit" value="Create account"/>
-        </form>
-        <a class="btn-text-primary" href={LOGIN_URL}>Already got an account? Login here!</a>
-    </div>
+                <Form.Button>Create account</Form.Button>
+            </form>
+        </Card.Content>
+        <Card.Footer>
+            <a class="btn-text-primary" href={LOGIN_URL}>Already got an account? Login here!</a>
+        </Card.Footer>
+    </Card.Root>
 
 </div>
