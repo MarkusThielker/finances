@@ -2,6 +2,10 @@
 
 This is a simple finances tracker that I use to keep track of my finances.
 
+> [!Warning]  
+> Development on this project has been stopped in favour of [Next-Finances](https://github.com/MarkusThielker/next-finances)! <br/>
+> Next-Finances is the NextJS-based successor to this project.
+
 # Getting started
 
 1. Set up the .env file. Therefor a sample is uploaded to the repository. Just copy the .env.sample file to .env and
